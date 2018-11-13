@@ -17,5 +17,6 @@ public class PanelBoard extends JPanel {
 			}
 			iswhite=!iswhite;
 		}
+		//hola
 	}
 }
