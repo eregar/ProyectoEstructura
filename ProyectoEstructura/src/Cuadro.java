@@ -13,14 +13,14 @@ public class Cuadro extends JPanel implements MouseListener{
 	public Cuadro(boolean white){
 		super();
 		this.setPreferredSize(new Dimension(75,75));
-		this.pieza= new King(true,this);// quita esto men es solo prueba
+		this.pieza= new King(white,this);// quita esto men es solo prueba
 		this.addMouseListener(this);
 		/*addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				vDJ.nuke();
 			}});*/
 		
-		if(white) this.setBackground(Color.BLACK);
+		if(white) this.setBackground(Color.ORANGE);
 		else this.setBackground(Color.WHITE);
 	}
 	
