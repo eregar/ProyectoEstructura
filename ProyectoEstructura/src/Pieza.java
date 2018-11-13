@@ -12,4 +12,10 @@ public class Pieza {
 	public void move(){
 		
 	}
+
+
+	public void drawPieza(Graphics g) {
+		// TODO Auto-generated method stub
+		//notghin
+	}
 }

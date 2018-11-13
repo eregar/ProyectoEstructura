@@ -4,8 +4,8 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class King extends Pieza{
-	private static Image rey= new ImageIcon("naveJugador.png").getImage();
-	private static Image reyB= new ImageIcon("naveJugador.png").getImage();
+	private static Image rey= new ImageIcon("reyBlanco.png").getImage();
+	private static Image reyB= new ImageIcon("reyNegro.png").getImage();
 	
 	public King(boolean side,Cuadro position){
 		this.side=side;
