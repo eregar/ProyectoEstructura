@@ -20,7 +20,7 @@ public class PanelBoard extends JPanel {
 			}
 			iswhite=!iswhite;
 		}
-		cuadros[0][0].setPieza(new Queen(true,1,1));
+		cuadros[0][0].setPieza(new Queen(true));
 	}
 	
 	public void setup(){

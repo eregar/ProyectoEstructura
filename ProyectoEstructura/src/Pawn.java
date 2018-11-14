@@ -3,11 +3,11 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-public class Queen extends Pieza{
-	private static Image rey= new ImageIcon("reinaBlanca.png").getImage();
-	private static Image reyB= new ImageIcon("reinaNegra.png").getImage();
+public class Pawn extends Pieza{
+	private static Image rey= new ImageIcon("peonBlanco.png").getImage();
+	private static Image reyB= new ImageIcon("peonNegro.png").getImage();
 	
-	public Queen(boolean side){
+	public Pawn(boolean side,int x,int y){
 		this.side=side;
 	}
 	
