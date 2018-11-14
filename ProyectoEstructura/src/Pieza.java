@@ -4,7 +4,6 @@ import javax.swing.ImageIcon;
 
 public class Pieza {
 	boolean side;
-	Cuadro position;
 	
 	
 	//solo para que se puedan guardar en una variable, no tienen metodos en comun aun

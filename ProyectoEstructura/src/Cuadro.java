@@ -10,23 +10,27 @@ import javax.swing.JPanel;
 
 public class Cuadro extends JPanel implements MouseListener{
 	Pieza pieza;
+	//cada cuadro pasar un numero 1-6, boolean, coordenadas
 	public Cuadro(boolean white){
 		super();
 		this.setPreferredSize(new Dimension(75,75));
-		this.pieza= new King(white,this);// quita esto men es solo prueba
 		this.addMouseListener(this);
 		/*addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				vDJ.nuke();
 			}});*/
-		
 		if(white) this.setBackground(Color.ORANGE);
 		else this.setBackground(Color.WHITE);
 	}
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		this.pieza.drawPieza(g);
+		if(this.pieza!=null)this.pieza.drawPieza(g);
+	}
+	
+	public void setPieza(Pieza pieza){
+		this.pieza=pieza;
+		repaint();
 	}
 
 	@Override
