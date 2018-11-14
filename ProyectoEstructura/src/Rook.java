@@ -4,11 +4,55 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Rook extends Pieza{
-	private static Image rey= new ImageIcon("reyBlanco.png").getImage();
-	private static Image reyB= new ImageIcon("reyNegro.png").getImage();
+	private static Image rey= new ImageIcon("torreBlanca.png").getImage();
+	private static Image reyB= new ImageIcon("torreNegra.png").getImage();
 	
-	public Rook(boolean side,int x,int y){
+	public Rook(boolean side){
 		this.side=side;
+	}
+	public boolean valida(Cuadro cuadro, int nextX,int nextY){
+		int cX=cuadro.getEx();
+		int cY=cuadro.getEy();
+		int dx=cX-nextX;
+		int dy=cY-nextY;
+		if(dx==0){
+			if(dy>0){
+				cY--;
+				while(cY>nextY){
+					if(cuadro.getBoard().checkPiece(cX, cY)) return false;
+					//checa pieza
+					cY--;
+				}
+			}else{
+				cY++;
+				while(cY<nextY){
+					if(cuadro.getBoard().checkPiece(cX, cY)) return false;
+					//checa pieza
+					cY++;
+				}
+			}
+			return true;
+		}
+		else if(dy==0){
+			if(dx>0){
+				cX--;
+				while(cX>nextX){
+					if(cuadro.getBoard().checkPiece(cX, cY)) return false;
+					//checa pieza
+					cX--;
+				}
+			}else{
+				cX++;
+				while(cX<nextX){
+					if(cuadro.getBoard().checkPiece(cX, cY)) return false;
+					//checa pieza
+					cX++;
+				}
+			}
+			return true;
+		}
+		else return false;
+		
 	}
 	
 	public void drawPieza(Graphics g){

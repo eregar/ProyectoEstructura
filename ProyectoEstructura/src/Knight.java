@@ -4,10 +4,10 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Knight extends Pieza{
-	private static Image rey= new ImageIcon("reyBlanco.png").getImage();
-	private static Image reyB= new ImageIcon("reyNegro.png").getImage();
+	private static Image rey= new ImageIcon("caballoBlanco.png").getImage();
+	private static Image reyB= new ImageIcon("caballoNegro.png").getImage();
 	
-	public Knight(boolean side,int x,int y){
+	public Knight(boolean side){
 		this.side=side;
 	}
 	

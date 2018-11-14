@@ -4,8 +4,8 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Bishop extends Pieza{
-	private static Image rey= new ImageIcon("reinaBlanca.png").getImage();
-	private static Image reyB= new ImageIcon("reinaNegra.png").getImage();
+	private static Image rey= new ImageIcon("alfilBlanco.png").getImage();
+	private static Image reyB= new ImageIcon("alfilNegro.png").getImage();
 	
 	public Bishop(boolean side){
 		this.side=side;

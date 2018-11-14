@@ -10,7 +10,7 @@ public class VentanaProyecto extends JFrame {
 		this.add(new PanelBoard());
 		this.pack();
 		this.setResizable(false);
-		//this.setMinimumSize(new Dimension(401,401));
+		this.setMinimumSize(new Dimension(401,401));
 		this.setVisible(true);
 	}
 	
