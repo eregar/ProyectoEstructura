@@ -6,9 +6,11 @@ import javax.swing.ImageIcon;
 public class King extends Pieza{
 	private static Image rey= new ImageIcon("reyBlanco.png").getImage();
 	private static Image reyB= new ImageIcon("reyNegro.png").getImage();
+	private boolean firstTurn;
 	
 	public King(boolean side){
 		this.side=side;
+		firstTurn=true;
 	}
 	public boolean valida(int cX, int cY, int nextX,int nextY){
 		int dx=Math.abs(cX-nextX);
