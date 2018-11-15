@@ -58,7 +58,7 @@ public class Rook extends Pieza{
 	public void drawPieza(Graphics g){
 		if(this.side) g.drawImage(rey, 0, 0,75,75, null);//draw blanca
 		else g.drawImage(reyB, 0, 0,75,75, null); //draw negra
-		//melapelas
+		
 	}
 	public void move(){
 		//cambias pocision

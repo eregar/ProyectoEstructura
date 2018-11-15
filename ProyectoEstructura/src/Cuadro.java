@@ -19,6 +19,9 @@ public class Cuadro extends JPanel implements MouseListener{
 		super();
 		this.pb=pb;
 		this.side=side;
+		this.pieza=null;
+		this.x=x;
+		this.y=y;
 		this.setPreferredSize(new Dimension(75,75));
 		this.addMouseListener(this);
 		/*addActionListener(new ActionListener(){
@@ -34,11 +37,11 @@ public class Cuadro extends JPanel implements MouseListener{
 	}
 	
 	public int getEx() {
-		return x;
+		return this.x;
 	}
 
 	public int getEy() {
-		return y;
+		return this.y;
 	}
 	public PanelBoard getBoard(){
 		return this.pb;
@@ -87,17 +90,19 @@ public class Cuadro extends JPanel implements MouseListener{
 		// TODO Auto-generated method stub
 			if(this.pb.getActual()!=null){// si ya hay un verde seleccionado
 				this.pb.getActual().redraw(); // quita lo verde(sigue seleccionado)
-				
+				//System.out.println(this.getEx()+","+this.getEy());
+				//System.out.println(this.pb.getActual().getEx()+","+this.pb.getActual().getEy());
 				if(this.pieza==null){ //si no hay pieza
-					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getX(),this.getY())){
-						//muevete aqui
-						System.out.println("hola");
+					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){
+						this.setPieza(this.getBoard().getActual().getPieza());//muevete aqui
+						this.getBoard().getActual().setPieza(null);
+						
 					}
 				}
 				else if(this.pieza.getSide()!=this.pb.getActual().pieza.getSide()){ // si es del otro bando
-					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getX(),this.getY())){
-						//matar a esta pieza
-						System.out.println("hola");
+					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){
+						this.setPieza(this.getBoard().getActual().getPieza());//mata al otro
+						this.getBoard().getActual().setPieza(null);
 					}
 				}
 				this.pb.setActual(null);//deselecciona, es al ultimo

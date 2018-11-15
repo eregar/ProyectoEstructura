@@ -12,9 +12,9 @@ public class King extends Pieza{
 		this.side=side;
 		firstTurn=true;
 	}
-	public boolean valida(int cX, int cY, int nextX,int nextY){
-		int dx=Math.abs(cX-nextX);
-		int dy=Math.abs(cY-nextY);
+	public boolean valida(Cuadro cuadro, int nextX,int nextY){
+		int dx=Math.abs(cuadro.getEx()-nextX);
+		int dy=Math.abs(cuadro.getEy()-nextY);
 		if(dx>1){
 			return false;
 		}

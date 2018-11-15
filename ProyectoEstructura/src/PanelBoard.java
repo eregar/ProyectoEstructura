@@ -8,6 +8,12 @@ public class PanelBoard extends JPanel {
 	private Cuadro[][] cuadros;
 	private Cuadro actual;
 	
+	public Cuadro[][] getCuadros() {
+		return cuadros;
+	}
+	public void setCuadros(Cuadro[][] cuadros) {
+		this.cuadros = cuadros;
+	}
 	public PanelBoard(){
 		super();
 		this.cuadros=new Cuadro[8][8];
