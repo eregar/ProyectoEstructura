@@ -8,9 +8,18 @@ public class Pawn extends Pieza{
 	private static Image reyB= new ImageIcon("peonNegro.png").getImage();
 	private boolean firstTurn;
 	
+	
 	public Pawn(boolean side){
 		this.side=side;
 		firstTurn=true;
+		this.value=1;
+		this.indefenso=0;
+	}
+	public int getValue() {
+		return value;
+	}
+	public void setValue(int value) {
+		this.value = value;
 	}
 	public boolean valida(Cuadro actual, int nextX,int nextY){
 		int signo;
@@ -27,19 +36,20 @@ public class Pawn extends Pieza{
 		}
 		
 		
-		if (signo*dy<=2 && dx==0){
-			if(signo*dy==1 && !actual.getBoard().checkPiece(nextX, nextY)) {
+		if (signo*dy<=2 && dx==0){//si se quiere mover uno o dos espacios adelante
+			if(signo*dy==1 && !actual.getBoard().checkPiece(nextX, nextY)) {//si la distancia es 1 y no hay piezas en el lugar
 				return true;
 			}
-			else if (signo*dy==2 && !actual.getBoard().checkPiece(nextX, nextY) && firstTurn) {
+			else if (signo*dy==2 && !actual.getBoard().checkPiece(nextX, nextY) && firstTurn && !actual.getBoard().checkPiece(cX, cY+(-1*signo))) {//si la distancia es 2 y es su primer turno y no hay piezas en el lugar ni en el lugar antes de ese
 				this.firstTurn = false;
+				this.indefenso = 2;
 				return true;
 			}
 			else {
 				return false;
 			}
 		}
-		else if (signo*dy==1 && dx==1) {
+		else if (signo*dy==1 && dx==1) {//para matar a alguien en diagonal
 			if (actual.getBoard().checkPiece(nextX, nextY)) {
 				return true;
 			}
@@ -47,6 +57,7 @@ public class Pawn extends Pieza{
 				return false;
 			}
 		}
+		
 		else {
 			return false;
 		}

@@ -9,6 +9,13 @@ public class Knight extends Pieza{
 	
 	public Knight(boolean side){
 		this.side=side;
+		this.value=3;
+	}
+	public int getValue() {
+		return value;
+	}
+	public void setValue(int value) {
+		this.value = value;
 	}
 	public boolean valida(Cuadro cuadro, int nextX,int nextY) {
 		int cX=cuadro.getEx();

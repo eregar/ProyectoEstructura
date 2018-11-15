@@ -60,6 +60,27 @@ public class Cuadro extends JPanel implements MouseListener{
 		return this.pieza;
 	}
 	
+	
+
+	public boolean getSide() {
+		return side;
+	}
+
+	public void setSide(boolean side) {
+		this.side = side;
+	}
+	public void revisaIndefensos() {
+		for(int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+				if(this.pb.checkPiece(i, j)) {
+					if(this.pb.getCuadros()[i][j].getPieza().getIndefenso()>0) {
+						this.pb.getCuadros()[i][j].getPieza().setIndefenso(this.pb.getCuadros()[i][j].getPieza().getIndefenso()-1);
+					
+					}
+				}
+			}
+		}
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -90,21 +111,41 @@ public class Cuadro extends JPanel implements MouseListener{
 		// TODO Auto-generated method stub
 			if(this.pb.getActual()!=null){// si ya hay un verde seleccionado
 				this.pb.getActual().redraw(); // quita lo verde(sigue seleccionado)
-				//System.out.println(this.getEx()+","+this.getEy());
-				//System.out.println(this.pb.getActual().getEx()+","+this.pb.getActual().getEy());
 				if(this.pieza==null){ //si no hay pieza
-					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){
+					
+					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){//si se hace la validación de movimiento
 						this.setPieza(this.getBoard().getActual().getPieza());//muevete aqui
 						this.getBoard().getActual().setPieza(null);
+						//this.revisaIndefensos();
 						
+					}
+					else if(this.pb.getActual().getPieza().getValue()==1) {//validación de la regla del peon de la quinta fila 
+						int xA = this.pb.getActual().getEx();
+						int yA = this.pb.getActual().getEy();
+						if(yA==3 || yA==4) {//si estan en las casillas 5 de sus lados
+							int dx = Math.abs(xA-this.getEx());
+							int dy = xA-this.getEx();
+							if(this.pb.checkPiece(this.getEx(), yA)) {//si no es null la casilla de a lado
+								System.out.println("hola");
+								if(this.pb.getCuadros()[this.getEx()][yA].getPieza().getValue()==1 && !this.pb.getCuadros()[this.getEx()][yA].getSide()==this.side) {// si la pieza de a lado es un peon y es del color opuesto
+									if(((this.side && dx==1 && dy==1) || (!this.side && dx==1 && dy==-1)) /*&& this.pb.getCuadros()[this.getEx()][yA].getPieza().indefenso==2*/) {
+										this.setPieza(this.getBoard().getActual().getPieza());
+										this.pb.getCuadros()[this.getEx()][yA].setPieza(null);
+										this.getBoard().getActual().setPieza(null);
+									}
+								}
+							}
+						}
 					}
 				}
 				else if(this.pieza.getSide()!=this.pb.getActual().pieza.getSide()){ // si es del otro bando
 					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){
 						this.setPieza(this.getBoard().getActual().getPieza());//mata al otro
 						this.getBoard().getActual().setPieza(null);
+						//this.revisaIndefensos();
 					}
 				}
+				
 				this.pb.setActual(null);//deselecciona, es al ultimo
 			}else{
 				if(this.pieza!=null){//si tiene pieza

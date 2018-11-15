@@ -4,8 +4,22 @@ import javax.swing.ImageIcon;
 
 public class Pieza {
 	protected boolean side;
+	protected int value;
+	protected int indefenso;
 	
 	
+	public int getIndefenso() {
+		return indefenso;
+	}
+	public void setIndefenso(int indefenso) {
+		this.indefenso = indefenso;
+	}
+	public int getValue() {
+		return value;
+	}
+	public void setValue(int value) {
+		this.value = value;
+	}
 	public boolean getSide() {
 		return side;
 	}

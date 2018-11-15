@@ -11,6 +11,13 @@ public class King extends Pieza{
 	public King(boolean side){
 		this.side=side;
 		firstTurn=true;
+		this.value=200;
+	}
+	public int getValue() {
+		return value;
+	}
+	public void setValue(int value) {
+		this.value = value;
 	}
 	public boolean valida(Cuadro cuadro, int nextX,int nextY){
 		int dx=Math.abs(cuadro.getEx()-nextX);
