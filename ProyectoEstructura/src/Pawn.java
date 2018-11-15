@@ -13,7 +13,7 @@ public class Pawn extends Pieza{
 		this.side=side;
 		firstTurn=true;
 		this.value=1;
-		this.indefenso=0;
+
 	}
 	public int getValue() {
 		return value;
@@ -42,7 +42,7 @@ public class Pawn extends Pieza{
 			}
 			else if (signo*dy==2 && !actual.getBoard().checkPiece(nextX, nextY) && firstTurn && !actual.getBoard().checkPiece(cX, cY+(-1*signo))) {//si la distancia es 2 y es su primer turno y no hay piezas en el lugar ni en el lugar antes de ese
 				this.firstTurn = false;
-				this.indefenso = 2;
+				this.indefenso=2;
 				return true;
 			}
 			else {

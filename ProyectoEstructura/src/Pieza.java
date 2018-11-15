@@ -6,6 +6,8 @@ public class Pieza {
 	protected boolean side;
 	protected int value;
 	protected int indefenso;
+
+	
 	
 	
 	public int getIndefenso() {

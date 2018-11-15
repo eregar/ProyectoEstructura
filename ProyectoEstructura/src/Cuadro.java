@@ -69,17 +69,17 @@ public class Cuadro extends JPanel implements MouseListener{
 	public void setSide(boolean side) {
 		this.side = side;
 	}
-	public void revisaIndefensos() {
-		for(int i=0;i<8;i++) {
-			for(int j=0;j<8;j++) {
-				if(this.pb.checkPiece(i, j)) {
-					if(this.pb.getCuadros()[i][j].getPieza().getIndefenso()>0) {
-						this.pb.getCuadros()[i][j].getPieza().setIndefenso(this.pb.getCuadros()[i][j].getPieza().getIndefenso()-1);
-					
-					}
-				}
+	public void revisaIndefensos() {//checa si alguna pieza tiene indefenso y le baja al counter de turnos 1.
+		if(this.pb.getIndefenso()!=null) {
+			if(this.pb.getIndefenso().getPieza().getIndefenso()>0) {
+				this.pb.getIndefenso().getPieza().setIndefenso(this.pb.getIndefenso().getPieza().getIndefenso()-1);
+				
+			}
+			if(this.pb.getIndefenso().getPieza().getIndefenso()==0) {
+				this.pb.setIndefenso(null);
 			}
 		}
+		
 	}
 
 	@Override
@@ -115,8 +115,14 @@ public class Cuadro extends JPanel implements MouseListener{
 					
 					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){//si se hace la validación de movimiento
 						this.setPieza(this.getBoard().getActual().getPieza());//muevete aqui
+						if(this.pb.getActual().equals(this.pb.getIndefenso())) {
+							this.pb.setIndefenso(this);
+						}
 						this.getBoard().getActual().setPieza(null);
-						//this.revisaIndefensos();
+						if(this.getPieza().getIndefenso()==2) {
+							this.pb.setIndefenso(this);
+						}
+						this.revisaIndefensos();
 						
 					}
 					else if(this.pb.getActual().getPieza().getValue()==1) {//validación de la regla del peon de la quinta fila 
@@ -124,14 +130,14 @@ public class Cuadro extends JPanel implements MouseListener{
 						int yA = this.pb.getActual().getEy();
 						if(yA==3 || yA==4) {//si estan en las casillas 5 de sus lados
 							int dx = Math.abs(xA-this.getEx());
-							int dy = xA-this.getEx();
+							int dy = yA-this.getEy();
 							if(this.pb.checkPiece(this.getEx(), yA)) {//si no es null la casilla de a lado
-								System.out.println("hola");
-								if(this.pb.getCuadros()[this.getEx()][yA].getPieza().getValue()==1 && !this.pb.getCuadros()[this.getEx()][yA].getSide()==this.side) {// si la pieza de a lado es un peon y es del color opuesto
-									if(((this.side && dx==1 && dy==1) || (!this.side && dx==1 && dy==-1)) /*&& this.pb.getCuadros()[this.getEx()][yA].getPieza().indefenso==2*/) {
+								if(this.pb.getCuadros()[yA][this.getEx()].getPieza().getValue()==1 && this.pb.getCuadros()[yA][this.getEx()].getSide()!=this.side) {// si la pieza de a lado es un peon y es del color opuesto
+									if(((this.pb.getActual().getPieza().getSide() && dx==1 && dy==1) || (!this.pb.getActual().getPieza().getSide() && dx==1 && dy==-1)) && this.pb.getCuadros()[yA][this.getEx()].equals(this.pb.getIndefenso())) {
 										this.setPieza(this.getBoard().getActual().getPieza());
-										this.pb.getCuadros()[this.getEx()][yA].setPieza(null);
+										this.pb.getCuadros()[yA][this.getEx()].setPieza(null);
 										this.getBoard().getActual().setPieza(null);
+										this.pb.setIndefenso(null);
 									}
 								}
 							}
@@ -141,8 +147,11 @@ public class Cuadro extends JPanel implements MouseListener{
 				else if(this.pieza.getSide()!=this.pb.getActual().pieza.getSide()){ // si es del otro bando
 					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){
 						this.setPieza(this.getBoard().getActual().getPieza());//mata al otro
+						if(this.pb.getActual().equals(this.pb.getIndefenso())) {
+							this.pb.setIndefenso(this);
+						}
 						this.getBoard().getActual().setPieza(null);
-						//this.revisaIndefensos();
+						this.revisaIndefensos();
 					}
 				}
 				

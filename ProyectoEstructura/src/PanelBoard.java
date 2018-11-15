@@ -1,3 +1,5 @@
+//notas: enroque, peon que se transforma, 50 turno, jaques y jaques mate.
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -7,6 +9,7 @@ public class PanelBoard extends JPanel {
 	
 	private Cuadro[][] cuadros;
 	private Cuadro actual;
+	private Cuadro indefenso;
 	
 	public Cuadro[][] getCuadros() {
 		return cuadros;
@@ -18,6 +21,7 @@ public class PanelBoard extends JPanel {
 		super();
 		this.cuadros=new Cuadro[8][8];
 		this.actual=null;
+		this.indefenso=null;
 		this.setPreferredSize(new Dimension(600,600));
 		this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		boolean iswhite=false;
@@ -33,6 +37,12 @@ public class PanelBoard extends JPanel {
 		setup(0,false);
 		setup(7,true);
 	
+	}
+	public Cuadro getIndefenso() {
+		return indefenso;
+	}
+	public void setIndefenso(Cuadro indefenso) {
+		this.indefenso = indefenso;
 	}
 	public boolean checkPiece(int x,int y){
 		//if((x<=7 && x>=0)&&(y<=7 && y>=0))
