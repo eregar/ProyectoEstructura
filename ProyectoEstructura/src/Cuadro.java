@@ -14,7 +14,7 @@ public class Cuadro extends JPanel implements MouseListener{
 	private boolean side;
 	private int x,y;
 
-	//cada cuadro pasar un numero 1-6, boolean, coordenadas
+	//blanco o negro, el tablero, coordenada x, coordenada y
 	public Cuadro(boolean side, PanelBoard pb, int x, int y){
 		super();
 		this.pb=pb;
@@ -43,7 +43,7 @@ public class Cuadro extends JPanel implements MouseListener{
 	public int getEy() {
 		return this.y;
 	}
-	public PanelBoard getBoard(){
+	public PanelBoard getBoard(){ // ????
 		return this.pb;
 	}
 	
@@ -59,8 +59,6 @@ public class Cuadro extends JPanel implements MouseListener{
 	public Pieza getPieza(){
 		return this.pieza;
 	}
-	
-	
 
 	public boolean getSide() {
 		return side;
@@ -69,13 +67,13 @@ public class Cuadro extends JPanel implements MouseListener{
 	public void setSide(boolean side) {
 		this.side = side;
 	}
+	
 	public void revisaIndefensos() {//checa si alguna pieza tiene indefenso y le baja al counter de turnos 1.
 		if(this.pb.getIndefenso()!=null) {
 			if(this.pb.getIndefenso().getPieza().getIndefenso()>0) {
 				this.pb.getIndefenso().getPieza().setIndefenso(this.pb.getIndefenso().getPieza().getIndefenso()-1);
-				
 			}
-			if(this.pb.getIndefenso().getPieza().getIndefenso()==0) {
+			else{
 				this.pb.setIndefenso(null);
 			}
 		}
@@ -111,17 +109,16 @@ public class Cuadro extends JPanel implements MouseListener{
 		// TODO Auto-generated method stub
 			if(this.pb.getActual()!=null){// si ya hay un verde seleccionado
 				this.pb.getActual().redraw(); // quita lo verde(sigue seleccionado)
-				if(this.pieza==null){ //si no hay pieza
-					
-					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){//si se hace la validación de movimiento
+				if(this.pieza==null){ //si no hay pieza en casilla picada
+					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){//se hace la validacion de movimiento, si es peon se vuelve indefenso
 						this.setPieza(this.getBoard().getActual().getPieza());//muevete aqui
 						if(this.pb.getActual().equals(this.pb.getIndefenso())) {
-							this.pb.setIndefenso(this);
+							this.pb.setIndefenso(this);//refresh indefenso
 						}
-						this.getBoard().getActual().setPieza(null);
-						if(this.getPieza().getIndefenso()==2) {
-							this.pb.setIndefenso(this);
-						}
+						this.getBoard().getActual().setPieza(null);// quita la pieza del de antes
+						/*if(this.getPieza().getIndefenso()==2) {
+							this.pb.setIndefenso(this); //obsoleto?
+						}*/
 						this.revisaIndefensos();
 						
 					}

@@ -77,6 +77,5 @@ public class PanelBoard extends JPanel {
 				cuadros[pos-1][i].setPieza(new Pawn(side));
 			}
 		}
-		//repaint();
 	}
 }

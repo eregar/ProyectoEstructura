@@ -28,13 +28,8 @@ public class Pawn extends Pieza{
 		int dx=Math.abs(cX-nextX);
 		int dy=cY-nextY;
 		
-		if(this.side) {
-			signo = 1;
-		}
-		else {
-			signo = -1;
-		}
-		
+		if(this.side) signo = 1;
+		else signo = -1;
 		
 		if (signo*dy<=2 && dx==0){//si se quiere mover uno o dos espacios adelante
 			if(signo*dy==1 && !actual.getBoard().checkPiece(nextX, nextY)) {//si la distancia es 1 y no hay piezas en el lugar
@@ -43,6 +38,7 @@ public class Pawn extends Pieza{
 			else if (signo*dy==2 && !actual.getBoard().checkPiece(nextX, nextY) && firstTurn && !actual.getBoard().checkPiece(cX, cY+(-1*signo))) {//si la distancia es 2 y es su primer turno y no hay piezas en el lugar ni en el lugar antes de ese
 				this.firstTurn = false;
 				this.indefenso=2;
+				actual.getBoard().setIndefenso(actual.getBoard().getCuadros()[nextY][nextX]);//dobabesxdxdxd
 				return true;
 			}
 			else {

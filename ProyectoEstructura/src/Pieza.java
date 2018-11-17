@@ -31,8 +31,7 @@ public class Pieza {
 	public boolean valida(Cuadro elactual,int nextX,int nextY){
 		return false;
 	}
-	//solo para que se puedan guardar en una variable, no tienen metodos en comun aun
-	//public void pintaPieza(Graphics g);
+	
 	public void move(){
 	}
 
