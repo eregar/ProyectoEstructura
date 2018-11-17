@@ -116,23 +116,20 @@ public class Cuadro extends JPanel implements MouseListener{
 							this.pb.setIndefenso(this);//refresh indefenso
 						}
 						this.getBoard().getActual().setPieza(null);// quita la pieza del de antes
-						/*if(this.getPieza().getIndefenso()==2) {
-							this.pb.setIndefenso(this); //obsoleto?
-						}*/
 						this.revisaIndefensos();
 						
 					}
-					else if(this.pb.getActual().getPieza().getValue()==1) {//validación de la regla del peon de la quinta fila 
-						int xA = this.pb.getActual().getEx();
+					else if(this.pb.getActual().getPieza().getValue()==1) {//validacion de la regla del peon de la quinta fila 
 						int yA = this.pb.getActual().getEy();
 						if(yA==3 || yA==4) {//si estan en las casillas 5 de sus lados
-							int dx = Math.abs(xA-this.getEx());
 							int dy = yA-this.getEy();
 							if(this.pb.checkPiece(this.getEx(), yA)) {//si no es null la casilla de a lado
-								if(this.pb.getCuadros()[yA][this.getEx()].getPieza().getValue()==1 && this.pb.getCuadros()[yA][this.getEx()].getSide()!=this.side) {// si la pieza de a lado es un peon y es del color opuesto
-									if(((this.pb.getActual().getPieza().getSide() && dx==1 && dy==1) || (!this.pb.getActual().getPieza().getSide() && dx==1 && dy==-1)) && this.pb.getCuadros()[yA][this.getEx()].equals(this.pb.getIndefenso())) {
+								Cuadro adyacente=this.pb.getCuadro(this.getEx(),yA);
+								boolean lado=this.pb.getActual().getPieza().getSide();
+								if(adyacente.getPieza().getValue()==1 && adyacente.getSide()!=this.side) {// si la pieza de a lado es un peon y es del color opuesto
+									if(((lado && dy==1) || (!lado && dy==-1)) && adyacente.equals(this.pb.getIndefenso())) {
 										this.setPieza(this.getBoard().getActual().getPieza());
-										this.pb.getCuadros()[yA][this.getEx()].setPieza(null);
+										adyacente.setPieza(null);
 										this.getBoard().getActual().setPieza(null);
 										this.pb.setIndefenso(null);
 									}

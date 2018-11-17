@@ -23,7 +23,7 @@ public class Knight extends Pieza{
 		int dx=Math.abs(cX-nextX);
 		int dy=Math.abs(cY-nextY);
 		
-		if((cuadro.getBoard().checkPiece(nextX, nextY) || cuadro.getBoard().getCuadros()[nextY][nextX].getPieza()==null)) {
+		if((cuadro.getBoard().checkPiece(nextX, nextY) || cuadro.getBoard().getCuadro(nextX,nextY).getPieza()==null)) {
 			if(dy==1) {
 				if(dx==2) {
 					return true;

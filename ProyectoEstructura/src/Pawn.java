@@ -38,7 +38,7 @@ public class Pawn extends Pieza{
 			else if (signo*dy==2 && !actual.getBoard().checkPiece(nextX, nextY) && firstTurn && !actual.getBoard().checkPiece(cX, cY+(-1*signo))) {//si la distancia es 2 y es su primer turno y no hay piezas en el lugar ni en el lugar antes de ese
 				this.firstTurn = false;
 				this.indefenso=2;
-				actual.getBoard().setIndefenso(actual.getBoard().getCuadros()[nextY][nextX]);//dobabesxdxdxd
+				actual.getBoard().setIndefenso(actual.getBoard().getCuadro(nextX,nextY));//dobabesxdxdxd
 				return true;
 			}
 			else {

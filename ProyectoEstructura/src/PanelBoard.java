@@ -11,8 +11,8 @@ public class PanelBoard extends JPanel {
 	private Cuadro actual;
 	private Cuadro indefenso;
 	
-	public Cuadro[][] getCuadros() {
-		return cuadros;
+	public Cuadro getCuadro(int x, int y) {
+		return this.cuadros[y][x];
 	}
 	public void setCuadros(Cuadro[][] cuadros) {
 		this.cuadros = cuadros;
