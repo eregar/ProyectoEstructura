@@ -9,7 +9,7 @@ public class Knight extends Pieza{
 	
 	public Knight(boolean side){
 		this.side=side;
-		this.value=3;
+		this.value=2;
 	}
 	public int getValue() {
 		return value;
@@ -23,45 +23,23 @@ public class Knight extends Pieza{
 		int dx=Math.abs(cX-nextX);
 		int dy=Math.abs(cY-nextY);
 		
-		if((cuadro.getBoard().checkPiece(nextX, nextY) || cuadro.getBoard().getCuadro(nextX,nextY).getPieza()==null)) {
-			if(dy==1) {
-				if(dx==2) {
-					return true;
-				}
-				else return false;
+		if(dy==1) {
+			if(dx==2) {
+				return true;
 			}
-			else if(dy==2) {
-				if(dx==1) {
-					return true;
-				}
-				else return false;
-			}
-			else if(dx==1) {
-				if(dy==2) {
-					return true;
-				}
-				else return false;
-			}
-			else if(dx==2) {
-				if(dy==1) {
-					return true;
-				}
-				else return false;
+			else return false;
+		}
+		else if(dy==2) {
+			if(dx==1) {
+				return true;
 			}
 			else return false;
 		}
 		else return false;
-		
-		
-		
 	}
+	
 	public void drawPieza(Graphics g){
 		if(this.side) g.drawImage(rey, 0, 0,75,75, null);//draw blanca
 		else g.drawImage(reyB, 0, 0,75,75, null); //draw negra
-		//melapelas
-	}
-	public void move(){
-		//cambias pocision
-		//haces repaint
 	}
 }

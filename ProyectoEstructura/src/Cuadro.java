@@ -125,6 +125,7 @@ public class Cuadro extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
+		Pieza temp;
 		// TODO Auto-generated method stub
 			if(this.pb.getActual()!=null){// si ya hay un verde seleccionado
 				this.pb.getActual().redraw(); // quita lo verde(sigue seleccionado)
@@ -134,11 +135,24 @@ public class Cuadro extends JPanel implements MouseListener{
 						if(this.pb.getActual().equals(this.pb.getIndefenso())) {
 							this.pb.setIndefenso(this);//refresh indefenso
 						}
-						else if(this.pb.getActual().getPieza().getValue()==1){// es peon?
+						this.getBoard().getActual().setPieza(null);// quita la pieza del de antes
+						if(this.pb.checkJaque(this.pb.getTurno())){//ve jaques, regresa a estado normal
+							this.getBoard().getActual().setPieza(this.pieza);
+							this.setPieza(null);
+							if(this.equals(this.pb.getIndefenso())) {
+								this.pb.setIndefenso(this.pb.getActual());//undo indefenso
+							}
+							this.pb.setActual(null);//deselecciona
+							System.out.println("ESTARIAS EN JAQUE");
+							return;
+						}
+						if(this.pieza.getValue()==1){// es peon?
 							 if(this.y==7 || this.y==0) choose(this.pieza.getSide()); // si llego a ultima de su color cambia
 						}
-						this.getBoard().getActual().setPieza(null);// quita la pieza del de antes
 						this.revisaIndefensos();
+						System.out.println("es jaque: "+this.pb.checkJaque(!this.pb.getTurno()));
+						this.pb.nextTurn();
+						System.out.println("turno: "+this.pb.getTurno());
 						
 					}
 					else if(this.pb.getActual().getPieza().getValue()==1) {//validacion de la regla del peon de la quinta fila 
@@ -151,9 +165,21 @@ public class Cuadro extends JPanel implements MouseListener{
 								if(adyacente.getPieza().getValue()==1 && adyacente.getSide()!=this.side) {// si la pieza de a lado es un peon y es del color opuesto
 									if(((lado && dy==1) || (!lado && dy==-1)) && adyacente.equals(this.pb.getIndefenso())) {
 										this.setPieza(this.getBoard().getActual().getPieza()); //muevete aqui
+										temp=adyacente.getPieza();
 										adyacente.setPieza(null); //mata a la pieza
 										this.getBoard().getActual().setPieza(null); //quita a la pieza de antes
+										if(this.pb.checkJaque(this.pb.getTurno())){//ve jaques, regresa a estado normal
+											this.getBoard().getActual().setPieza(this.pieza);//undo quitar pieza de antes
+											this.setPieza(null);// undo muevete aqui
+											adyacente.setPieza(temp);
+											this.pb.setActual(null);//deselecciona
+											System.out.println("ESTARIAS EN JAQUE");
+											return;
+										}
 										this.pb.setIndefenso(null); //quita indefenso
+										System.out.println("es jaque: "+this.pb.checkJaque(!this.pb.getTurno()));
+										this.pb.nextTurn();
+										System.out.println("Turno: "+this.pb.getTurno());
 									}
 								}
 							}
@@ -162,19 +188,34 @@ public class Cuadro extends JPanel implements MouseListener{
 				}
 				else if(this.pieza.getSide()!=this.pb.getActual().pieza.getSide()){ // si es del otro bando
 					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){
+						temp=this.getPieza();
 						this.setPieza(this.getBoard().getActual().getPieza());//mata al otro, muevete
 						if(this.pb.getActual().equals(this.pb.getIndefenso())) {
 							this.pb.setIndefenso(this);
 						}
-						else if(this.pb.getActual().getPieza().getValue()==1){// es peon?
+						this.getBoard().getActual().setPieza(null);// quita pieza de antes
+						if(this.pb.checkJaque(this.pb.getTurno())){//ve jaques, regresa a estado normal
+							this.getBoard().getActual().setPieza(this.pieza); //undo muevete aqui
+							this.setPieza(temp); //undo matar pieza
+							if(this.equals(this.pb.getIndefenso())) {
+								this.pb.setIndefenso(this.pb.getActual());//undo indefenso
+							}
+							this.pb.setActual(null);//deselecciona
+							System.out.println("ESTARIAS EN JAQUE");
+							return;
+						}
+						if(this.pieza.getValue()==1){// es peon?
 							 if(this.y==7) choose(this.pieza.getSide()); // si llego a ultima de su color cambia
 							 else if(this.y==0) choose(this.pieza.getSide()); //x2
 						}
-						this.getBoard().getActual().setPieza(null);// quita pieza de antes
 						this.revisaIndefensos();
+						System.out.println("es jaque: "+this.pb.checkJaque(!this.pb.getTurno()));
+						this.pb.nextTurn();
+						System.out.println("Turno: "+this.pb.getTurno());
 					}
 				}
 				this.pb.setActual(null);//deselecciona, es al ultimo
+				
 			}else{
 				if(this.pieza!=null){//si tiene pieza
 					this.pb.setActual(this);//selecciona verde

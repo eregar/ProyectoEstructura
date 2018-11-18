@@ -69,8 +69,4 @@ public class Pawn extends Pieza{
 		else g.drawImage(reyB, 0, 0,75,75, null); //draw negra
 		//melapelas
 	}
-	public void move(){
-		//cambias pocision
-		//haces repaint
-	}
 }
