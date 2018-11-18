@@ -186,7 +186,7 @@ public class PanelBoard extends JPanel {
 			dx--;
 			dy--;
 		}
-		for(int i=-2;i<3;i++){
+		for(int i=-2;i<3;i++){// checa posibles casillas de caballos
 			for(int j=-2;j<3;j++){
 				dx=kingX+i;
 				dy=kingY+j;
@@ -201,12 +201,7 @@ public class PanelBoard extends JPanel {
 				}
 			}
 		}
-		
-		
-		//faltan caballos 8 casillas
 		return false;
-		
-		//checar piezas en x, en y, en diagonal y en L
 		
 		
 	}
