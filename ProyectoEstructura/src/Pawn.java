@@ -2,6 +2,7 @@
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Pawn extends Pieza{
 	private static Image rey= new ImageIcon("peonBlanco.png").getImage();
@@ -21,6 +22,8 @@ public class Pawn extends Pieza{
 	public void setValue(int value) {
 		this.value = value;
 	}
+	
+	
 	public boolean valida(Cuadro actual, int nextX,int nextY){
 		int signo;
 		int cX=actual.getEx();

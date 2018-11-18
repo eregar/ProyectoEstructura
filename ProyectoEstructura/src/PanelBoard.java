@@ -1,4 +1,4 @@
-//notas: enroque, peon que se transforma, 50 turno, jaques y jaques mate.
+//notas: enroque, 50 turno, jaques y jaques mate, IA.
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -45,7 +45,6 @@ public class PanelBoard extends JPanel {
 		this.indefenso = indefenso;
 	}
 	public boolean checkPiece(int x,int y){
-		//if((x<=7 && x>=0)&&(y<=7 && y>=0))
 		if(this.cuadros[y][x].getPieza()!=null){
 			return true;
 		}

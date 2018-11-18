@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Cuadro extends JPanel implements MouseListener{
@@ -68,6 +70,23 @@ public class Cuadro extends JPanel implements MouseListener{
 		this.side = side;
 	}
 	
+	public void choose(boolean side){
+		String[] piezas = {"Reina", "Torre", "Caballo", "Alfil"};
+		int x = JOptionPane.showOptionDialog(null, "Elige una pieza",
+		        "",
+		        JOptionPane.DEFAULT_OPTION,
+		        JOptionPane.INFORMATION_MESSAGE,
+		        null, piezas, piezas[0]);
+		switch(x){
+		case -1: this.setPieza(new Queen(side)); break;
+		case 0: this.setPieza(new Queen(side)); break;
+		case 1: this.setPieza(new Rook(side)); break;
+		case 2: this.setPieza(new Knight(side)); break;
+		case 3: this.setPieza(new Bishop(side)); break;
+		}
+		
+	}
+	
 	public void revisaIndefensos() {//checa si alguna pieza tiene indefenso y le baja al counter de turnos 1.
 		if(this.pb.getIndefenso()!=null) {
 			if(this.pb.getIndefenso().getPieza().getIndefenso()>0) {
@@ -110,10 +129,13 @@ public class Cuadro extends JPanel implements MouseListener{
 			if(this.pb.getActual()!=null){// si ya hay un verde seleccionado
 				this.pb.getActual().redraw(); // quita lo verde(sigue seleccionado)
 				if(this.pieza==null){ //si no hay pieza en casilla picada
-					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){//se hace la validacion de movimiento, si es peon se vuelve indefenso
+					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){//se hace la validacion de movimiento,
 						this.setPieza(this.getBoard().getActual().getPieza());//muevete aqui
 						if(this.pb.getActual().equals(this.pb.getIndefenso())) {
 							this.pb.setIndefenso(this);//refresh indefenso
+						}
+						else if(this.pb.getActual().getPieza().getValue()==1){// es peon?
+							 if(this.y==7 || this.y==0) choose(this.pieza.getSide()); // si llego a ultima de su color cambia
 						}
 						this.getBoard().getActual().setPieza(null);// quita la pieza del de antes
 						this.revisaIndefensos();
@@ -128,10 +150,10 @@ public class Cuadro extends JPanel implements MouseListener{
 								boolean lado=this.pb.getActual().getPieza().getSide();
 								if(adyacente.getPieza().getValue()==1 && adyacente.getSide()!=this.side) {// si la pieza de a lado es un peon y es del color opuesto
 									if(((lado && dy==1) || (!lado && dy==-1)) && adyacente.equals(this.pb.getIndefenso())) {
-										this.setPieza(this.getBoard().getActual().getPieza());
-										adyacente.setPieza(null);
-										this.getBoard().getActual().setPieza(null);
-										this.pb.setIndefenso(null);
+										this.setPieza(this.getBoard().getActual().getPieza()); //muevete aqui
+										adyacente.setPieza(null); //mata a la pieza
+										this.getBoard().getActual().setPieza(null); //quita a la pieza de antes
+										this.pb.setIndefenso(null); //quita indefenso
 									}
 								}
 							}
@@ -140,15 +162,18 @@ public class Cuadro extends JPanel implements MouseListener{
 				}
 				else if(this.pieza.getSide()!=this.pb.getActual().pieza.getSide()){ // si es del otro bando
 					if(this.pb.getActual().pieza.valida(this.pb.getActual(),this.getEx(),this.getEy())){
-						this.setPieza(this.getBoard().getActual().getPieza());//mata al otro
+						this.setPieza(this.getBoard().getActual().getPieza());//mata al otro, muevete
 						if(this.pb.getActual().equals(this.pb.getIndefenso())) {
 							this.pb.setIndefenso(this);
 						}
-						this.getBoard().getActual().setPieza(null);
+						else if(this.pb.getActual().getPieza().getValue()==1){// es peon?
+							 if(this.y==7) choose(this.pieza.getSide()); // si llego a ultima de su color cambia
+							 else if(this.y==0) choose(this.pieza.getSide()); //x2
+						}
+						this.getBoard().getActual().setPieza(null);// quita pieza de antes
 						this.revisaIndefensos();
 					}
 				}
-				
 				this.pb.setActual(null);//deselecciona, es al ultimo
 			}else{
 				if(this.pieza!=null){//si tiene pieza
