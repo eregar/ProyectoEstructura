@@ -10,13 +10,9 @@ public class PanelBoard extends JPanel {
 	private Cuadro[][] cuadros;
 	private Cuadro actual;
 	private Cuadro indefenso;
+	private boolean turno;
 	
-	public Cuadro getCuadro(int x, int y) {
-		return this.cuadros[y][x];
-	}
-	public void setCuadros(Cuadro[][] cuadros) {
-		this.cuadros = cuadros;
-	}
+	
 	public PanelBoard(){
 		super();
 		this.cuadros=new Cuadro[8][8];
@@ -36,7 +32,9 @@ public class PanelBoard extends JPanel {
 		}
 		setup(0,false);
 		setup(7,true);
-	
+	}
+	public Cuadro getCuadro(int x, int y) {
+		return this.cuadros[y][x];
 	}
 	public Cuadro getIndefenso() {
 		return indefenso;

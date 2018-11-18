@@ -2,7 +2,6 @@
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 public class Pawn extends Pieza{
 	private static Image rey= new ImageIcon("peonBlanco.png").getImage();
