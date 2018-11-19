@@ -38,9 +38,9 @@ public class Pawn extends Pieza{
 				return true;
 			}
 			else if (signo*dy==2 && !actual.getBoard().checkPiece(nextX, nextY) && firstTurn && !actual.getBoard().checkPiece(cX, cY+(-1*signo))) {//si la distancia es 2 y es su primer turno y no hay piezas en el lugar ni en el lugar antes de ese
-				this.firstTurn = false;
-				this.indefenso=2;
-				actual.getBoard().setIndefenso(actual.getBoard().getCuadro(nextX,nextY));//dobabesxdxdxd
+				/*this.firstTurn = false;//AQUI
+				this.indefenso=2;//AQUI
+				actual.getBoard().setIndefenso(actual.getBoard().getCuadro(nextX,nextY));//dobabesxdxdxd AQUI*/
 				return true;
 			}
 			else {
@@ -61,12 +61,17 @@ public class Pawn extends Pieza{
 		}
 		
 	}
-	
+	public void realMove(Cuadro cuadro){
+		if(this.firstTurn){
+			this.firstTurn = false;//AQUI
+			this.indefenso=2;//AQUI
+			cuadro.getBoard().setIndefenso(cuadro);//dobabesxdxdxd 
+		}
+	}
 	
 	
 	public void drawPieza(Graphics g){
 		if(this.side) g.drawImage(rey, 0, 0,75,75, null);//draw blanca
 		else g.drawImage(reyB, 0, 0,75,75, null); //draw negra
-		//melapelas
 	}
 }

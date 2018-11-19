@@ -31,6 +31,9 @@ public class Pieza {
 	public boolean valida(Cuadro elactual,int nextX,int nextY){
 		return false;
 	}
+	public void realMove(Cuadro cuadro){
+		return;
+	}
 
 
 	public void drawPieza(Graphics g) {

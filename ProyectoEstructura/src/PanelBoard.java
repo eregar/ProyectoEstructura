@@ -1,4 +1,4 @@
-//notas: enroque, 50 turno, jaques y jaques mate, IA.
+//notas: enroque, 50 turno, jaques mate, IA.
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -63,6 +63,64 @@ public class PanelBoard extends JPanel {
 		this.turno=!this.turno;
 	}
 	
+	
+	public boolean checkJaqueMate(boolean side){
+		int pieceX=0;
+		int	pieceY=0;
+		Pieza temp=null;
+		for(Cuadro[] x:cuadros){
+			for(Cuadro y:x){
+				if(y.getPieza()!=null){
+					if(y.getPieza().getSide()==side){
+						pieceX=y.getEx();
+						pieceY=y.getEy();
+						for(Cuadro[] a:cuadros){
+							for(Cuadro b:a){
+								if(b!=y){
+									if(this.getCuadro(pieceX,pieceY).getPieza().valida(this.getCuadro(pieceX,pieceY), b.getEx(), b.getEy())){
+										if(b.getPieza()!=null){
+											if(b.getPieza().getSide()==side){
+												System.out.println("pieza del mismo color");
+												continue;
+											}else{
+												System.out.println("hay pieza enemiga");
+												temp=b.getPieza();
+											}
+										}
+										System.out.println("moviendo:"+this.getCuadro(pieceX,pieceY).getPieza().getValue());
+										this.getCuadro(b.getEx(),b.getEy()).moveHere(this.getCuadro(pieceX,pieceY));
+										if(!this.checkJaque(side)){//checar jaque de nuevo
+											System.out.println("regresando:"+this.getCuadro(b.getEx(),b.getEy()).getPieza().getValue());
+											this.getCuadro(pieceX,pieceY).moveHere(this.getCuadro(b.getEx(),b.getEy()));
+											this.getCuadro(b.getEx(),b.getEy()).setPieza(temp);
+											return false;
+										}
+										else{
+											System.out.println("regresando:"+this.getCuadro(b.getEx(),b.getEy()).getPieza().getValue());
+											this.getCuadro(pieceX,pieceY).moveHere(this.getCuadro(b.getEx(),b.getEy()));
+											this.getCuadro(b.getEx(),b.getEy()).setPieza(temp);
+											temp=null;
+										}
+									}
+								}
+							}
+						}
+						/*switch(y.getPieza().getValue()){
+						case 1: break;
+						case 2: break;
+						case 3: break;
+						case 5: if(this.checkTower(pieceX, pieceY, side))return false;
+								break;
+						case 10: break;
+						case 200: break;
+						}*/
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
 	public boolean checkJaque(boolean side){// una optimizacion estaria bien :v
 		int kingX=-1;
 		int kingY=-1;
@@ -116,9 +174,11 @@ public class PanelBoard extends JPanel {
 		}
 		int dx=kingX+1;
 		int dy=kingY+1;
-		if(!side &&checkPiece(dx,dy)){
-			if(cuadros[dy][dx].getPieza().getSide()==true && cuadros[dy][dx].getPieza().getValue()==1){
-				return true;
+		if(dx<8 && dy<8){
+			if(!side && checkPiece(dx,dy)){// peon
+				if(cuadros[dy][dx].getPieza().getSide()==true && cuadros[dy][dx].getPieza().getValue()==1){
+					return true;
+				}
 			}
 		}
 		while(dx<8 && dy<8){//pa diagonal derecha abajo
@@ -134,9 +194,11 @@ public class PanelBoard extends JPanel {
 		}
 		dx=kingX+1;
 		dy=kingY-1;
-		if(side &&checkPiece(dx,dy)){
-			if(cuadros[dy][dx].getPieza().getSide()==false && cuadros[dy][dx].getPieza().getValue()==1){
-				return true;
+		if(dx<8 && dy>=0){
+			if(side &&checkPiece(dx,dy)){//peon
+				if(cuadros[dy][dx].getPieza().getSide()==false && cuadros[dy][dx].getPieza().getValue()==1){
+					return true;
+				}
 			}
 		}
 		while(dx<8 && dy>=0){//pa diagonal derecha arriba
@@ -152,9 +214,11 @@ public class PanelBoard extends JPanel {
 		}
 		dx=kingX-1;
 		dy=kingY+1;
-		if(!side &&checkPiece(dx,dy)){
-			if(cuadros[dy][dx].getPieza().getSide()==true && cuadros[dy][dx].getPieza().getValue()==1){
-				return true;
+		if(dx>=0 && dy<8){
+			if(!side &&checkPiece(dx,dy)){//peon
+				if(cuadros[dy][dx].getPieza().getSide()==true && cuadros[dy][dx].getPieza().getValue()==1){
+					return true;
+				}
 			}
 		}
 		while(dx>=0 && dy<8){//pa diagonal izquierda abajo
@@ -170,9 +234,11 @@ public class PanelBoard extends JPanel {
 		}
 		dx=kingX-1;
 		dy=kingY-1;
-		if(side &&checkPiece(dx,dy)){
-			if(cuadros[dy][dx].getPieza().getSide()==false && cuadros[dy][dx].getPieza().getValue()==1){
-				return true;
+		if(dx>=0 && dy>=0){
+			if(side &&checkPiece(dx,dy)){//peon
+				if(cuadros[dy][dx].getPieza().getSide()==false && cuadros[dy][dx].getPieza().getValue()==1){
+					return true;
+				}
 			}
 		}
 		while(dx>=0 && dy>=0){//pa diagonal izquierda arriba
@@ -202,10 +268,9 @@ public class PanelBoard extends JPanel {
 			}
 		}
 		return false;
-		
-		
 	}
 	
+	//private boolean check
 	public void setup(int pos, boolean side){
 		cuadros[pos][0].setPieza(new Rook(side));
 		cuadros[pos][7].setPieza(new Rook(side));
