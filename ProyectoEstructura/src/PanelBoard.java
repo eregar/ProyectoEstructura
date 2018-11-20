@@ -22,6 +22,15 @@ public class PanelBoard extends JPanel {
 	public void setCounter(int counter) {
 		this.counter = counter;
 	}
+	public PanelBoard(VentanaProyecto vp, Cuadro[][] cuadros, Cuadro actual, Cuadro indefenso, boolean turno, int counter) {
+		super();
+		this.vp=vp;
+		this.cuadros=cuadros;
+		this.actual=actual;
+		this.indefenso=indefenso;
+		this.turno=turno;
+		this.counter=counter;
+	}
 	public PanelBoard(VentanaProyecto vp){
 		super();
 		this.vp=vp;
@@ -302,11 +311,31 @@ public class PanelBoard extends JPanel {
 	
 	
 	public void bot(){
-		int maxScore,maxX,maxY,temp;
+		int maxScore,maxX,maxY,temp,signo;
+		Cuadro[][] cuadros= new Cuadro[8][8];
+		System.arraycopy(this.cuadros, 0, cuadros, 0, 8);
+		Cuadro actual = this.actual;
+		Cuadro indefenso = this.indefenso;
+		boolean turno = this.turno;
+		int counter = this.counter;
+		VentanaProyecto vp = this.vp;
+		
+		bot();
+		
+		//duplicamos todos los atributos
+		//le pasamos a la funcion recursiva todos esos atributos
 		Cuadro maxCuadro=null;
 		
-		maxScore=-500;
-		temp=0;
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+		/*temp=0;
 		for(Cuadro[] a:cuadros){
 			for(Cuadro b:a){
 				if(b.getPieza()!=null){
@@ -323,15 +352,43 @@ public class PanelBoard extends JPanel {
 		//cambiar turno a true
 	}
 	private int calculaScore(int x, int y){
-		int counter=0;
+		PanelBoard newBoard = new PanelBoard(this.vp,this.cuadros, this.actual, this.indefenso, this.turno, this.counter);
+		int maxScore=-500;
+		for(Cuadro[] a:cuadros){
+			for(Cuadro b:a){
+				if(b!=this.getCuadro(x, y)) {
+					if(this.getCuadro(x, y).getPieza().valida(this.getCuadro(x, y), b.getEx(), b.getEy())) {
+						int scoreTmp= this.calculaScore(x, y,b.getEx(),b.getEy(),0,0);
+						if(maxScore<scoreTmp) {
+							maxScore=scoreTmp;
+						}
+					}
+				}
+			}
+		}
 		
-		return calculaScore(x,y,counter);
+		return maxScore;
 		//recursividad
 	}
 	
-	private int calculaScore(){
+	private int calculaScore(int x, int y, int nX, int nY, int counter, int score){
+		int scoreComb=0;
+		int xNew=0;
+		int yNew=0;
+		if(counter==3) {
+			return score; 
+		}
+		else {
+			
+			//todo el cagadero
+			scoreComb=2;
+			scoreComb+=score;
+			return calculaScore(xNew,yNew,counter+1,scoreComb);
+		}
 		
-	}
+		
+		
+	}*/
 }
 
 
