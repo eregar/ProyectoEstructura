@@ -12,10 +12,20 @@ public class PanelBoard extends JPanel {
 	private Cuadro actual;
 	private Cuadro indefenso;
 	private boolean turno;
+	private int counter;
+	private VentanaProyecto vp;
+
 	
 	
-	public PanelBoard(){
+	public int getCounter() {
+		return counter;
+	}
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
+	public PanelBoard(VentanaProyecto vp){
 		super();
+		this.vp=vp;
 		this.cuadros=new Cuadro[8][8];
 		this.actual=null;
 		this.indefenso=null;
@@ -252,7 +262,7 @@ public class PanelBoard extends JPanel {
 					if((Math.abs(i)==1 && Math.abs(j)==2) || (Math.abs(i)==2 && Math.abs(j)==1)){
 						if(checkPiece(dx,dy)){
 							if(cuadros[dy][dx].getPieza().getSide()!=side){
-								if(cuadros[dy][dx].getPieza().getValue()==2) return true;
+								if(cuadros[dy][dx].getPieza().getValue()==4) return true;
 							}
 						}	
 					}
@@ -288,5 +298,8 @@ public class PanelBoard extends JPanel {
 				cuadros[pos-1][i].setPieza(new Pawn(side));
 			}
 		}
+	}
+	public void close() {
+		this.vp.dispose();
 	}
 }

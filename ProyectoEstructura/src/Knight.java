@@ -9,7 +9,7 @@ public class Knight extends Pieza{
 	
 	public Knight(boolean side){
 		this.side=side;
-		this.value=2;
+		this.value=4;
 	}
 	public int getValue() {
 		return value;

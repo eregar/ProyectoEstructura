@@ -158,6 +158,7 @@ public class Cuadro extends JPanel implements MouseListener{
 						if(this.pieza.getValue()==1){// es peon?
 							 if(this.y==7 || this.y==0) choose(this.pieza.getSide()); // si llego a ultima de su color cambia
 						}
+						this.pb.setCounter(this.pb.getCounter()+1);
 						this.pieza.realMove(this);//hace cosas como quitar el firstTurn o asignar indefenso
 						this.revisaIndefensos();
 						if(this.pb.checkJaque(!this.pb.getTurno())){
@@ -191,6 +192,7 @@ public class Cuadro extends JPanel implements MouseListener{
 											System.out.println("ESTARIAS EN JAQUE");
 											return;
 										}
+										this.pb.setCounter(this.pb.getCounter()+1);
 										this.pb.setIndefenso(null); //quita indefenso
 										if(this.pb.checkJaque(!this.pb.getTurno())){
 											System.out.println("es jaque mate: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
@@ -227,6 +229,7 @@ public class Cuadro extends JPanel implements MouseListener{
 							 if(this.y==7) choose(this.pieza.getSide()); // si llego a ultima de su color cambia
 							 else if(this.y==0) choose(this.pieza.getSide()); //x2
 						}
+						this.pb.setCounter(0);
 						this.pieza.realMove(this);// hace cosas como quitar el firstTurn o asignar indefenso
 						this.revisaIndefensos();
 						if(this.pb.checkJaque(!this.pb.getTurno())){//del siguiente turno
@@ -246,6 +249,10 @@ public class Cuadro extends JPanel implements MouseListener{
 					this.pb.setActual(this);//selecciona verde
 					this.setBackground(Color.GREEN);
 				}
+			}
+			if(this.pb.getCounter()==5) {
+				JOptionPane.showMessageDialog(this.pb, "Perdiste we xdxd");
+				this.pb.close();
 			}
 	}
 }

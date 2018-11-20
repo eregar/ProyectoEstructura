@@ -65,7 +65,7 @@ public class Pawn extends Pieza{
 		if(this.firstTurn){
 			this.firstTurn = false;//AQUI
 			this.indefenso=2;//AQUI
-			cuadro.getBoard().setIndefenso(cuadro);//dobabesxdxdxd 
+			cuadro.getBoard().setIndefenso(cuadro);//
 		}
 	}
 	
