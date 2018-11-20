@@ -44,6 +44,7 @@ public class King extends Pieza{
 						if(!cuadro.getBoard().getCuadro(0, cuadro.getEy()).getPieza().getFirstTurn()){
 							res=false;
 						}
+						if(cuadro.getBoard().checkPiece(1, cuadro.getEy())) res=false;
 					}else res=false;
 				}
 				cuadro.moveHere(cuadro.getBoard().getCuadro(cuadro.getEx()+lado, cuadro.getEy()));

@@ -250,7 +250,7 @@ public class Cuadro extends JPanel implements MouseListener{
 					this.setBackground(Color.GREEN);
 				}
 			}
-			if(this.pb.getCounter()==5) {
+			if(this.pb.getCounter()==50) {
 				JOptionPane.showMessageDialog(this.pb, "Perdiste we xdxd");
 				this.pb.close();
 			}

@@ -1,4 +1,4 @@
-//notas: enroque, 50 turno, jaques mate, IA.
+//notas:  IA.
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
