@@ -10,12 +10,16 @@ public class Rook extends Pieza{
 	public Rook(boolean side){
 		this.side=side;
 		this.value=5;
+		this.firstTurn=true;
 	}
 	public int getValue() {
 		return value;
 	}
 	public void setValue(int value) {
 		this.value = value;
+	}
+	public void realMove(Cuadro cuadro){
+		this.firstTurn=false;
 	}
 	public boolean valida(Cuadro cuadro, int nextX,int nextY){
 		int cX=cuadro.getEx();

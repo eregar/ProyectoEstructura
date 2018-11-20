@@ -80,23 +80,23 @@ public class PanelBoard extends JPanel {
 									if(this.getCuadro(pieceX,pieceY).getPieza().valida(this.getCuadro(pieceX,pieceY), b.getEx(), b.getEy())){
 										if(b.getPieza()!=null){
 											if(b.getPieza().getSide()==side){
-												System.out.println("pieza del mismo color");
+												//System.out.println("pieza del mismo color");
 												continue;
 											}else{
-												System.out.println("hay pieza enemiga");
+												//System.out.println("hay pieza enemiga");
 												temp=b.getPieza();
 											}
 										}
-										System.out.println("moviendo:"+this.getCuadro(pieceX,pieceY).getPieza().getValue());
+										//System.out.println("moviendo:"+this.getCuadro(pieceX,pieceY).getPieza().getValue());
 										this.getCuadro(b.getEx(),b.getEy()).moveHere(this.getCuadro(pieceX,pieceY));
 										if(!this.checkJaque(side)){//checar jaque de nuevo
-											System.out.println("regresando:"+this.getCuadro(b.getEx(),b.getEy()).getPieza().getValue());
+											//System.out.println("regresando:"+this.getCuadro(b.getEx(),b.getEy()).getPieza().getValue());
 											this.getCuadro(pieceX,pieceY).moveHere(this.getCuadro(b.getEx(),b.getEy()));
 											this.getCuadro(b.getEx(),b.getEy()).setPieza(temp);
 											return false;
 										}
 										else{
-											System.out.println("regresando:"+this.getCuadro(b.getEx(),b.getEy()).getPieza().getValue());
+											//System.out.println("regresando:"+this.getCuadro(b.getEx(),b.getEy()).getPieza().getValue());
 											this.getCuadro(pieceX,pieceY).moveHere(this.getCuadro(b.getEx(),b.getEy()));
 											this.getCuadro(b.getEx(),b.getEy()).setPieza(temp);
 											temp=null;
@@ -105,15 +105,6 @@ public class PanelBoard extends JPanel {
 								}
 							}
 						}
-						/*switch(y.getPieza().getValue()){
-						case 1: break;
-						case 2: break;
-						case 3: break;
-						case 5: if(this.checkTower(pieceX, pieceY, side))return false;
-								break;
-						case 10: break;
-						case 200: break;
-						}*/
 					}
 				}
 			}
@@ -136,6 +127,7 @@ public class PanelBoard extends JPanel {
 			}
 		}
 		if(kingX==-1 || kingY==-1) throw new NoSuchElementException("Rey inexistente");
+		
 		for(int i=kingX+1;i<8;i++){//pa la derecha
 			if(checkPiece(i,kingY)){
 				if(cuadros[kingY][i].getPieza().getSide()!=side){
@@ -235,7 +227,7 @@ public class PanelBoard extends JPanel {
 		dx=kingX-1;
 		dy=kingY-1;
 		if(dx>=0 && dy>=0){
-			if(side &&checkPiece(dx,dy)){//peon
+			if(side && checkPiece(dx,dy)){//peon
 				if(cuadros[dy][dx].getPieza().getSide()==false && cuadros[dy][dx].getPieza().getValue()==1){
 					return true;
 				}
@@ -264,12 +256,18 @@ public class PanelBoard extends JPanel {
 							}
 						}	
 					}
+					else if((Math.abs(i)==1 || i==0) && (Math.abs(j)==1 || j==0)){
+						if(checkPiece(dx,dy)){
+							if(cuadros[dy][dx].getPieza().getSide()!=side){
+								if(cuadros[dy][dx].getPieza().getValue()==200) return true;
+							}
+						}
+					}
 				}
 			}
 		}
 		return false;
 	}
-	
 	//private boolean check
 	public void setup(int pos, boolean side){
 		cuadros[pos][0].setPieza(new Rook(side));

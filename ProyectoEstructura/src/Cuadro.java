@@ -163,6 +163,9 @@ public class Cuadro extends JPanel implements MouseListener{
 						if(this.pb.checkJaque(!this.pb.getTurno())){
 							System.out.println("es jaque mate: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
 						}
+						else{
+							System.out.println("es tablas: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
+						}
 						this.pb.nextTurn();
 						System.out.println("turno: "+this.pb.getTurno());
 						
@@ -191,6 +194,8 @@ public class Cuadro extends JPanel implements MouseListener{
 										this.pb.setIndefenso(null); //quita indefenso
 										if(this.pb.checkJaque(!this.pb.getTurno())){
 											System.out.println("es jaque mate: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
+										}else{
+											System.out.println("es tablas: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
 										}
 										this.pb.nextTurn();
 										System.out.println("Turno: "+this.pb.getTurno());
@@ -226,6 +231,9 @@ public class Cuadro extends JPanel implements MouseListener{
 						this.revisaIndefensos();
 						if(this.pb.checkJaque(!this.pb.getTurno())){//del siguiente turno
 							System.out.println("es jaque mate: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
+						}
+						else{
+							System.out.println("es tablas: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
 						}
 						this.pb.nextTurn();
 						System.out.println("Turno: "+this.pb.getTurno());

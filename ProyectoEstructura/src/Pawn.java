@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 public class Pawn extends Pieza{
 	private static Image rey= new ImageIcon("peonBlanco.png").getImage();
 	private static Image reyB= new ImageIcon("peonNegro.png").getImage();
-	private boolean firstTurn;
+	//private boolean firstTurn;
 	
 	
 	public Pawn(boolean side){
