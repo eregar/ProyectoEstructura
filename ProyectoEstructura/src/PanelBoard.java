@@ -299,4 +299,39 @@ public class PanelBoard extends JPanel {
 	public void close() {
 		this.vp.dispose();
 	}
+	
+	
+	public void bot(){
+		int maxScore,maxX,maxY,temp;
+		Cuadro maxCuadro=null;
+		
+		maxScore=-500;
+		temp=0;
+		for(Cuadro[] a:cuadros){
+			for(Cuadro b:a){
+				if(b.getPieza()!=null){
+					temp=calculaScore(b.getEx(),b.getEy());
+					//llamar a la funcion recursiva que te saca el score de esa pieza
+				}
+				if(maxScore<temp){
+					maxScore=temp;
+					//set variable maxCuadro		
+				}
+			}
+		}
+		//mover las piezas
+		//cambiar turno a true
+	}
+	private int calculaScore(int x, int y){
+		int counter=0;
+		
+		return calculaScore(x,y,counter);
+		//recursividad
+	}
+	
+	private int calculaScore(){
+		
+	}
 }
+
+
