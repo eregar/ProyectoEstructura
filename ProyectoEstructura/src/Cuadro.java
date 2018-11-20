@@ -161,11 +161,18 @@ public class Cuadro extends JPanel implements MouseListener{
 						this.pb.setCounter(this.pb.getCounter()+1);
 						this.pieza.realMove(this);//hace cosas como quitar el firstTurn o asignar indefenso
 						this.revisaIndefensos();
-						if(this.pb.checkJaque(!this.pb.getTurno())){
-							System.out.println("es jaque mate: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
+						if(this.pb.checkJaque(!this.pb.getTurno())){//del siguiente turno
+							if(this.pb.checkJaqueMate(!this.pb.getTurno())){
+								String dialog;
+								if(this.pb.getTurno()) dialog="El Jugador";
+								else dialog="La maquina";
+								JOptionPane.showMessageDialog(this.pb, "Jaque mate! Gana "+dialog);
+								this.pb.close();
+							}
 						}
-						else{
-							System.out.println("es tablas: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
+						else if(this.pb.checkJaqueMate(!this.pb.getTurno())){
+							JOptionPane.showMessageDialog(this.pb, "Tablas! ya no hay movimientos dosponibles");
+							this.pb.close();
 						}
 						this.pb.nextTurn();
 						System.out.println("turno: "+this.pb.getTurno());
@@ -194,10 +201,18 @@ public class Cuadro extends JPanel implements MouseListener{
 										}
 										this.pb.setCounter(this.pb.getCounter()+1);
 										this.pb.setIndefenso(null); //quita indefenso
-										if(this.pb.checkJaque(!this.pb.getTurno())){
-											System.out.println("es jaque mate: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
-										}else{
-											System.out.println("es tablas: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
+										if(this.pb.checkJaque(!this.pb.getTurno())){//del siguiente turno
+											if(this.pb.checkJaqueMate(!this.pb.getTurno())){
+												String dialog;
+												if(this.pb.getTurno()) dialog="El Jugador!";
+												else dialog="La maquina!";
+												JOptionPane.showMessageDialog(this.pb, "Jaque mate! Gana "+dialog);
+												this.pb.close();
+											}
+										}
+										else if(this.pb.checkJaqueMate(!this.pb.getTurno())){
+											JOptionPane.showMessageDialog(this.pb, "Tablas! ya no hay movimientos dosponibles");
+											this.pb.close();
 										}
 										this.pb.nextTurn();
 										System.out.println("Turno: "+this.pb.getTurno());
@@ -233,10 +248,17 @@ public class Cuadro extends JPanel implements MouseListener{
 						this.pieza.realMove(this);// hace cosas como quitar el firstTurn o asignar indefenso
 						this.revisaIndefensos();
 						if(this.pb.checkJaque(!this.pb.getTurno())){//del siguiente turno
-							System.out.println("es jaque mate: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
+							if(this.pb.checkJaqueMate(!this.pb.getTurno())){
+								String dialog;
+								if(this.pb.getTurno()) dialog="El Jugador";
+								else dialog="La maquina";
+								JOptionPane.showMessageDialog(this.pb, "Jaque mate! Gana "+dialog);
+								this.pb.close();
+							}
 						}
-						else{
-							System.out.println("es tablas: "+this.pb.checkJaqueMate(!this.pb.getTurno()));
+						else if(this.pb.checkJaqueMate(!this.pb.getTurno())){
+							JOptionPane.showMessageDialog(this.pb, "Tablas! ya no hay movimientos dosponibles");
+							this.pb.close();
 						}
 						this.pb.nextTurn();
 						System.out.println("Turno: "+this.pb.getTurno());

@@ -1,9 +1,8 @@
-//notas:  IA.
+//notas: IA.
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.NoSuchElementException;
-
 import javax.swing.JPanel;
 
 public class PanelBoard extends JPanel {
@@ -90,23 +89,18 @@ public class PanelBoard extends JPanel {
 									if(this.getCuadro(pieceX,pieceY).getPieza().valida(this.getCuadro(pieceX,pieceY), b.getEx(), b.getEy())){
 										if(b.getPieza()!=null){
 											if(b.getPieza().getSide()==side){
-												//System.out.println("pieza del mismo color");
 												continue;
 											}else{
-												//System.out.println("hay pieza enemiga");
 												temp=b.getPieza();
 											}
 										}
-										//System.out.println("moviendo:"+this.getCuadro(pieceX,pieceY).getPieza().getValue());
 										this.getCuadro(b.getEx(),b.getEy()).moveHere(this.getCuadro(pieceX,pieceY));
 										if(!this.checkJaque(side)){//checar jaque de nuevo
-											//System.out.println("regresando:"+this.getCuadro(b.getEx(),b.getEy()).getPieza().getValue());
 											this.getCuadro(pieceX,pieceY).moveHere(this.getCuadro(b.getEx(),b.getEy()));
 											this.getCuadro(b.getEx(),b.getEy()).setPieza(temp);
 											return false;
 										}
 										else{
-											//System.out.println("regresando:"+this.getCuadro(b.getEx(),b.getEy()).getPieza().getValue());
 											this.getCuadro(pieceX,pieceY).moveHere(this.getCuadro(b.getEx(),b.getEy()));
 											this.getCuadro(b.getEx(),b.getEy()).setPieza(temp);
 											temp=null;
@@ -258,8 +252,11 @@ public class PanelBoard extends JPanel {
 			for(int j=-2;j<3;j++){
 				dx=kingX+i;
 				dy=kingY+j;
-				if(dx<7 && dy<7 && dx>=0 && dy>=0){
+				if(dx<8 && dy<8 && dx>=0 && dy>=0){
+					//System.out.println(i);
+					//System.out.println(j);
 					if((Math.abs(i)==1 && Math.abs(j)==2) || (Math.abs(i)==2 && Math.abs(j)==1)){
+						
 						if(checkPiece(dx,dy)){
 							if(cuadros[dy][dx].getPieza().getSide()!=side){
 								if(cuadros[dy][dx].getPieza().getValue()==4) return true;
