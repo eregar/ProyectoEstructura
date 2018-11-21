@@ -319,15 +319,105 @@ public class PanelBoard extends JPanel {
 		boolean turno = this.turno;
 		int counter = this.counter;
 		VentanaProyecto vp = this.vp;
+		maxX=0;
+		maxY=0;
+		temp=0;
+		maxScore=0;
+		int pieceX=0;
+		int pieceY=0;
 		
-		bot();
+		for(Cuadro[] a:cuadros){
+			for(Cuadro b:a){
+				if(b.getPieza()!=null){
+					if(b.getPieza().getSide()==false){
+						for(Cuadro[] x:cuadros){
+							for(Cuadro y:x){
+								temp=0;
+								pieceX=b.getEx();
+								pieceY=b.getEy();
+								if(b!=y){
+									//mueve la pieza a un lugar disponible
+									if(this.getCuadro(pieceX,pieceY).getPieza().valida(this.getCuadro(pieceX,pieceY), y.getEx(), y.getEy())){
+										if(y.getPieza()!=null){
+											if(y.getPieza().getSide()==false){
+												continue;
+											}else{
+												//calcular score (tiene que hacerse simultaneamente) 
+												temp=y.getPieza().getValue();
+												//mover pieza
+											}
+										}else{
+											//mover pieza 
+										}
+										temp=bot(temp,true,this.cuadros,actual,indefenso,1);
+										if(temp>maxScore){
+											maxScore=temp;
+											maxX=pieceX;
+											maxY=pieceY;
+										}
+										
+									}
+								}
+								//(reseteas)regresas la pieza
+							}
+						}
+					}
+				}
+			}
+		}
+		//mueve la pieza realmente, haz repaint, turno cambialo a true
+	}
+	public int bot(int maxScore, boolean turno, Cuadro[][] cuadros, Cuadro actual, Cuadro indefenso, int counter ){
+		int temp,signo;
+		temp=0;
+		int maxScore2=0;
+		int pieceX=0;
+		int pieceY=0;
 		
-		//duplicamos todos los atributos
-		//le pasamos a la funcion recursiva todos esos atributos
-		Cuadro maxCuadro=null;
+		if(turno)signo=1;
+		else signo=-1;
 		
-		
-		
+		if(counter==3){
+			return 0;
+		}else{
+			for(Cuadro[] a:cuadros){//for doble
+				for(Cuadro b:a){
+					if(b.getPieza()!=null){// si hay una pieza
+						if(b.getPieza().getSide()==turno){//si es del color del turno
+							for(Cuadro[] x:cuadros){//for doble (para checar espacios en donde s epuede mover)
+								for(Cuadro y:x){
+									pieceX=b.getEx(); //coordenadas actuales
+									pieceY=b.getEy();
+									if(b!=y){
+										//mueve la pieza a un lugar disponible
+										if(this.getCuadro(pieceX,pieceY).getPieza().valida(this.getCuadro(pieceX,pieceY), y.getEx(), y.getEy())){
+											if(y.getPieza()!=null){
+												if(y.getPieza().getSide()==turno){
+													continue;
+												}else{
+													temp+=-signo*y.getPieza().getValue();
+													//mover pieza
+												}
+											}else{
+												//mover pieza 
+												//checar si estas cubriendo otra pieza
+											}
+											if(temp>maxScore2){
+												maxScore2=temp;
+											}
+										}
+									}
+									//(reseteas)regresas la pieza
+								}
+							}						
+							//llama recursiva para calcular score
+							// checa si score es mayor y si si pos la regresa
+						}
+					}
+				}
+			}
+			return maxScore2+maxScore+bot(maxScore,!turno,cuadros,actual,indefenso,counter+1);
+		}
 	}
 	
 	
