@@ -319,6 +319,7 @@ public class PanelBoard extends JPanel {
 		boolean turno = this.turno;
 		int counter = this.counter;
 		VentanaProyecto vp = this.vp;
+		Cuadro maxCuadro=null;
 		maxX=0;
 		maxY=0;
 		temp=0;
@@ -335,6 +336,7 @@ public class PanelBoard extends JPanel {
 								temp=0;
 								pieceX=b.getEx();
 								pieceY=b.getEy();
+								maxCuadro=y;
 								if(b!=y){
 									//mueve la pieza a un lugar disponible
 									if(this.getCuadro(pieceX,pieceY).getPieza().valida(this.getCuadro(pieceX,pieceY), y.getEx(), y.getEy())){
@@ -344,21 +346,32 @@ public class PanelBoard extends JPanel {
 											}else{
 												//calcular score (tiene que hacerse simultaneamente) 
 												temp=y.getPieza().getValue();
-												//mover pieza
+												this.getCuadro(maxX, maxY).moveHere(maxCuadro);
+												this.getCuadro(maxX, maxY).getPieza().realMove(getCuadro(maxX, maxY));
 											}
 										}else{
-											//mover pieza 
+											System.out.println(this.getCuadro(maxCuadro.getEx(), maxCuadro.getEy()));
+											this.getCuadro(maxX, maxY).moveHere(maxCuadro);
+											
 										}
 										temp=bot(temp,true,this.cuadros,actual,indefenso,1);
 										if(temp>maxScore){
 											maxScore=temp;
-											maxX=pieceX;
-											maxY=pieceY;
+											maxX=y.getEx();
+											maxY=y.getEy();
+											maxCuadro=b;
+											
 										}
 										
 									}
 								}
 								//(reseteas)regresas la pieza
+								System.arraycopy(cuadros, 0, this.cuadros, 0, 8);
+								this.indefenso=indefenso;
+								this.turno=turno;
+								this.counter=counter;
+								this.vp=vp;
+								this.actual=actual;
 							}
 						}
 					}
@@ -366,6 +379,10 @@ public class PanelBoard extends JPanel {
 			}
 		}
 		//mueve la pieza realmente, haz repaint, turno cambialo a true
+		this.getCuadro(maxX, maxY).moveHere(maxCuadro);
+		this.getCuadro(maxX, maxY).getPieza().realMove(getCuadro(maxX, maxY));
+		this.repaint();
+		this.turno=true;
 	}
 	public int bot(int maxScore, boolean turno, Cuadro[][] cuadros, Cuadro actual, Cuadro indefenso, int counter ){
 		int temp,signo;
@@ -373,6 +390,10 @@ public class PanelBoard extends JPanel {
 		int maxScore2=0;
 		int pieceX=0;
 		int pieceY=0;
+		Cuadro[][] cuadrosTmp=new Cuadro[8][8];
+		System.arraycopy(cuadros, 0, cuadrosTmp, 0, 8);
+		
+		
 		
 		if(turno)signo=1;
 		else signo=-1;
@@ -390,17 +411,21 @@ public class PanelBoard extends JPanel {
 									pieceY=b.getEy();
 									if(b!=y){
 										//mueve la pieza a un lugar disponible
-										if(this.getCuadro(pieceX,pieceY).getPieza().valida(this.getCuadro(pieceX,pieceY), y.getEx(), y.getEy())){
+										System.out.println(b.getPieza());
+										if(b.getPieza().valida(b, y.getEx(), y.getEy())){
 											if(y.getPieza()!=null){
 												if(y.getPieza().getSide()==turno){
 													continue;
 												}else{
 													temp+=-signo*y.getPieza().getValue();
 													//mover pieza
+													this.getCuadro(y.getEx(), y.getEy()).moveHere(b);
+													this.getCuadro(y.getEx(), y.getEy()).getPieza().realMove(getCuadro(y.getEx(), y.getEy()));
 												}
 											}else{
 												//mover pieza 
-												//checar si estas cubriendo otra pieza
+												this.getCuadro(y.getEx(), y.getEy()).moveHere(b);
+												//this.getCuadro(y.getEx(), y.getEy()).getPieza().realMove(getCuadro(y.getEx(), y.getEy()));
 											}
 											if(temp>maxScore2){
 												maxScore2=temp;
@@ -408,10 +433,14 @@ public class PanelBoard extends JPanel {
 										}
 									}
 									//(reseteas)regresas la pieza
+									System.arraycopy(cuadrosTmp, 0, this.cuadros, 0, 8);
+									this.indefenso=indefenso;
+									//this.turno=turno;
+									this.counter=counter;
+									this.vp=vp;
+									this.actual=actual;
 								}
 							}						
-							//llama recursiva para calcular score
-							// checa si score es mayor y si si pos la regresa
 						}
 					}
 				}

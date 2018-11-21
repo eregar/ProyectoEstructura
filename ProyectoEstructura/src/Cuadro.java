@@ -175,6 +175,7 @@ public class Cuadro extends JPanel implements MouseListener{
 							this.pb.close();
 						}
 						this.pb.nextTurn();
+						this.pb.bot();
 						System.out.println("turno: "+this.pb.getTurno());
 						
 					}
@@ -215,6 +216,7 @@ public class Cuadro extends JPanel implements MouseListener{
 											this.pb.close();
 										}
 										this.pb.nextTurn();
+										this.pb.bot();
 										System.out.println("Turno: "+this.pb.getTurno());
 									}
 								}
@@ -261,6 +263,7 @@ public class Cuadro extends JPanel implements MouseListener{
 							this.pb.close();
 						}
 						this.pb.nextTurn();
+						this.pb.bot();
 						System.out.println("Turno: "+this.pb.getTurno());
 					}
 				}
