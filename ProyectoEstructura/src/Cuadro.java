@@ -176,7 +176,8 @@ public class Cuadro extends JPanel implements MouseListener{
 						}
 						this.pb.nextTurn();
 						this.pb.bot();
-						System.out.println("turno: "+this.pb.getTurno());
+						this.pb.getMaxFinal().moveHere(this.pb.getMaxInicial());
+						//System.out.println("turno: "+this.pb.getTurno());
 						
 					}
 					else if(this.pb.getActual().getPieza().getValue()==1) {//validacion de la regla del peon de la quinta fila 
@@ -217,7 +218,12 @@ public class Cuadro extends JPanel implements MouseListener{
 										}
 										this.pb.nextTurn();
 										this.pb.bot();
-										System.out.println("Turno: "+this.pb.getTurno());
+										this.pb.getMaxFinal().moveHere(this.pb.getMaxInicial());
+										/*this.pb.bot();
+										System.out.println(this.pb.getMaxFinal().getPieza());
+										System.out.println(this.pb.getMaxInicial().getPieza());
+										this.pb.getMaxFinal().moveHere(this.pb.getMaxInicial());*/
+										//System.out.println("Turno: "+this.pb.getTurno());
 									}
 								}
 							}
@@ -264,7 +270,8 @@ public class Cuadro extends JPanel implements MouseListener{
 						}
 						this.pb.nextTurn();
 						this.pb.bot();
-						System.out.println("Turno: "+this.pb.getTurno());
+						this.pb.getMaxFinal().moveHere(this.pb.getMaxInicial());
+						//System.out.println("Turno: "+this.pb.getTurno());
 					}
 				}
 				this.pb.setActual(null);//deselecciona, es al ultimo
@@ -279,5 +286,14 @@ public class Cuadro extends JPanel implements MouseListener{
 				JOptionPane.showMessageDialog(this.pb, "Perdiste we xdxd");
 				this.pb.close();
 			}
+			/*if(this.pb.getTurno()==false) {
+				this.repaint();
+				this.pb.bot();
+				System.out.println(this.pb.getMaxFinal().getEx());
+				System.out.println(this.pb.getMaxFinal().getEy());
+				System.out.println(this.pb.getMaxInicial().getPieza());
+				this.pb.getMaxFinal().moveHere(this.pb.getMaxInicial());
+				
+			}*/
 	}
 }

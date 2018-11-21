@@ -329,11 +329,13 @@ public class PanelBoard extends JPanel {
 	}
 	
 	public int bot(int counter, boolean turno) {
+		Cuadro cdi = null;
+		Cuadro cdf = null;
 		int signo;//variable para restar o sumar
 		int puntMax=575757;
 		int puntTemp=0;
 		
-		if(counter==3) {//caso base
+		if(counter==5) {//caso base
 			return 0;
 		}
 		else {
@@ -343,7 +345,7 @@ public class PanelBoard extends JPanel {
 			else {
 				signo=1;
 			}
-			System.out.println(counter);
+			//System.out.println(counter);
 			for(int i = 0; i < this.cuadros.length; i++) {
 				for(int j = 0; j < this.cuadros.length; j++) {//doble for para recorrer el inicial
 					
@@ -356,8 +358,8 @@ public class PanelBoard extends JPanel {
 								for(int l = 0; l < this.cuadros.length; l++) {
 									
 									Cuadro finale = this.getCuadro(k, l);//asignamos el cuadro final
-									System.out.println(inicial.getPieza());
-									System.out.println(finale.getPieza());
+									//System.out.println(inicial.getPieza());
+									//System.out.println(finale.getPieza());
 									if(inicial.getPieza().valida(inicial, finale.getEx(), finale.getEy())) {//validamos que se pueda mover ahi
 										if (finale.getPieza()==null) {//si no hay pieza en el lugar
 											finale.moveHere(inicial);
@@ -367,8 +369,13 @@ public class PanelBoard extends JPanel {
 												puntMax=puntTemp;
 												this.maxInicial=inicial;
 												this.maxFinal=finale;
-												inicial.moveHere(finale);
+												/*if(counter==0) {
+													cdi = inicial;
+													cdf = finale;
+												}*/
+												
 											}
+											inicial.moveHere(finale);
 										}
 										else if(finale.getPieza().side!=turno) {
 											Pieza enemigo = finale.getPieza();
@@ -385,9 +392,14 @@ public class PanelBoard extends JPanel {
 												puntMax=puntTemp;
 												this.maxInicial=inicial;
 												this.maxFinal=finale;
-												inicial.moveHere(finale);
-												finale.setPieza(enemigo);
+												/*if(counter==0) {
+													cdi = inicial;
+													cdf = finale;
+												}*/
+												
 											}
+											inicial.moveHere(finale);
+											finale.setPieza(enemigo);
 										}
 									}
 								}
@@ -397,6 +409,7 @@ public class PanelBoard extends JPanel {
 				}
 			}
 		}
+		
 		this.nextTurn();
 		return puntMax;
 	}

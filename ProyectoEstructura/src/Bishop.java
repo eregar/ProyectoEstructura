@@ -1,4 +1,3 @@
-
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -29,12 +28,14 @@ public class Bishop extends Pieza{
 					//arriba izquierda
 					cY--;
 					cX--;
-					while(cX!=nextX) {
-						if(cuadro.getBoard().checkPiece(cX, cY))return false;
-						cY--;
-						cX--;
-					}
-					return true;
+					if(cX>=0 && cY>=0){
+						while(cX!=nextX) {
+							if(cuadro.getBoard().checkPiece(cX, cY))return false;
+							cY--;
+							cX--;
+						}
+						return true;
+					}return false;
 				}else{
 					//abajo izquierda
 					cY++;
@@ -51,22 +52,29 @@ public class Bishop extends Pieza{
 					//arriba derecha
 					cY--;
 					cX++;
-					while(cX!=nextX) {
+					if(cX<8 && cY>=0){
+						while(cX!=nextX) {
 						if(cuadro.getBoard().checkPiece(cX, cY))return false;
 						cY--;
 						cX++;
-					}
-					return true;
+						}
+						return true;
+					}return false;
+					
 				}else{
 					//abajo derecha
 					cY++;
 					cX++;
-					while(cX!=nextX) {
+					
+						while(cX!=nextX) {
+							if(cX<8 && cY<8){
 						if(cuadro.getBoard().checkPiece(cX, cY))return false;
 						cY++;
 						cX++;
+						}
+						return true;
 					}
-					return true;
+					return false;
 				}
 			}
 		}else return false;
