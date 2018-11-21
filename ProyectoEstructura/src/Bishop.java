@@ -29,7 +29,7 @@ public class Bishop extends Pieza{
 					cY--;
 					cX--;
 					if(cX>=0 && cY>=0){
-						while(cX!=nextX) {
+						while(cX>nextX) {
 							if(cuadro.getBoard().checkPiece(cX, cY))return false;
 							cY--;
 							cX--;
@@ -40,7 +40,7 @@ public class Bishop extends Pieza{
 					//abajo izquierda
 					cY++;
 					cX--;
-					while(cX!=nextX) {
+					while(cX>nextX) {
 						if(cuadro.getBoard().checkPiece(cX, cY))return false;
 						cY++;
 						cX--;
@@ -53,7 +53,7 @@ public class Bishop extends Pieza{
 					cY--;
 					cX++;
 					if(cX<8 && cY>=0){
-						while(cX!=nextX) {
+						while(cX<nextX) {
 						if(cuadro.getBoard().checkPiece(cX, cY))return false;
 						cY--;
 						cX++;
@@ -66,15 +66,14 @@ public class Bishop extends Pieza{
 					cY++;
 					cX++;
 					
-						while(cX!=nextX) {
-							if(cX<8 && cY<8){
-						if(cuadro.getBoard().checkPiece(cX, cY))return false;
-						cY++;
-						cX++;
-						}
-						return true;
+					while(cX<nextX) {
+						if(cX<8 && cY<8){
+							if(cuadro.getBoard().checkPiece(cX, cY))return false;
+								cY++;
+								cX++;
+							}
 					}
-					return false;
+					return true;
 				}
 			}
 		}else return false;

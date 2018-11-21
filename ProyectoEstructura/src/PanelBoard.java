@@ -410,7 +410,6 @@ public class PanelBoard extends JPanel {
 			}
 		}
 		
-		this.nextTurn();
 		return puntMax;
 	}
 	

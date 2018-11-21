@@ -34,6 +34,7 @@ public class Rook extends Pieza{
 					//checa pieza
 					cY--;
 				}
+				return true;
 			}else{
 				cY++;
 				while(cY<nextY){
@@ -41,8 +42,8 @@ public class Rook extends Pieza{
 					//checa pieza
 					cY++;
 				}
+				return true;
 			}
-			return true;
 		}
 		else if(dy==0){
 			if(dx>0){
