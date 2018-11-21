@@ -13,6 +13,7 @@ public class PanelBoard extends JPanel {
 	private boolean turno;
 	private int counter;
 	private VentanaProyecto vp;
+	private Cuadro maxInicial,maxFinal;
 
 	
 	
@@ -34,6 +35,8 @@ public class PanelBoard extends JPanel {
 	public PanelBoard(VentanaProyecto vp){
 		super();
 		this.vp=vp;
+		this.maxInicial=null;
+		this.maxFinal=null;
 		this.cuadros=new Cuadro[8][8];
 		this.actual=null;
 		this.indefenso=null;
@@ -52,6 +55,18 @@ public class PanelBoard extends JPanel {
 		}
 		setup(0,false);
 		setup(7,true);
+	}
+	public Cuadro getMaxInicial() {
+		return maxInicial;
+	}
+	public void setMaxInicial(Cuadro maxInicial) {
+		this.maxInicial = maxInicial;
+	}
+	public Cuadro getMaxFinal() {
+		return maxFinal;
+	}
+	public void setMaxFinal(Cuadro maxFinal) {
+		this.maxFinal = maxFinal;
 	}
 	public Cuadro getCuadro(int x, int y) {
 		return this.cuadros[y][x];
@@ -309,205 +324,83 @@ public class PanelBoard extends JPanel {
 		this.vp.dispose();
 	}
 	
+	public void bot() {
+		bot(0,false);
+	}
 	
-	public void bot(){
-		int maxScore,maxX,maxY,temp,signo;
-		Cuadro[][] cuadros= new Cuadro[8][8];
-		System.arraycopy(this.cuadros, 0, cuadros, 0, 8);
-		Cuadro actual = this.actual;
-		Cuadro indefenso = this.indefenso;
-		boolean turno = this.turno;
-		int counter = this.counter;
-		VentanaProyecto vp = this.vp;
-		Cuadro maxCuadro=null;
-		maxX=0;
-		maxY=0;
-		temp=0;
-		maxScore=0;
-		int pieceX=0;
-		int pieceY=0;
+	public int bot(int counter, boolean turno) {
+		int signo;//variable para restar o sumar
+		int puntMax=575757;
+		int puntTemp=0;
 		
-		for(Cuadro[] a:cuadros){
-			for(Cuadro b:a){
-				if(b.getPieza()!=null){
-					if(b.getPieza().getSide()==false){
-						for(Cuadro[] x:cuadros){
-							for(Cuadro y:x){
-								temp=0;
-								pieceX=b.getEx();
-								pieceY=b.getEy();
-								maxCuadro=y;
-								if(b!=y){
-									//mueve la pieza a un lugar disponible
-									if(this.getCuadro(pieceX,pieceY).getPieza().valida(this.getCuadro(pieceX,pieceY), y.getEx(), y.getEy())){
-										if(y.getPieza()!=null){
-											if(y.getPieza().getSide()==false){
-												continue;
-											}else{
-												//calcular score (tiene que hacerse simultaneamente) 
-												temp=y.getPieza().getValue();
-												this.getCuadro(maxX, maxY).moveHere(maxCuadro);
-												this.getCuadro(maxX, maxY).getPieza().realMove(getCuadro(maxX, maxY));
+		if(counter==3) {//caso base
+			return 0;
+		}
+		else {
+			if(turno==true) {//validación del signo
+				signo=-1;
+			}
+			else {
+				signo=1;
+			}
+			System.out.println(counter);
+			for(int i = 0; i < this.cuadros.length; i++) {
+				for(int j = 0; j < this.cuadros.length; j++) {//doble for para recorrer el inicial
+					
+					if(this.getCuadro(i, j).getPieza() != null) {//si el inicial no es null
+						
+						Cuadro inicial = this.getCuadro(i, j);//asignamos nombre al cuadro inicial para mejor acceso
+						
+						if(inicial.getPieza().getSide() == turno) {//si es negro
+							for(int k = 0; k<this.cuadros.length; k++) {
+								for(int l = 0; l < this.cuadros.length; l++) {
+									
+									Cuadro finale = this.getCuadro(k, l);//asignamos el cuadro final
+									System.out.println(inicial.getPieza());
+									System.out.println(finale.getPieza());
+									if(inicial.getPieza().valida(inicial, finale.getEx(), finale.getEy())) {//validamos que se pueda mover ahi
+										if (finale.getPieza()==null) {//si no hay pieza en el lugar
+											finale.moveHere(inicial);
+											
+											puntTemp = bot(counter+1,!turno);
+											if(puntMax==575757 || puntMax<puntTemp) {
+												puntMax=puntTemp;
+												this.maxInicial=inicial;
+												this.maxFinal=finale;
+												inicial.moveHere(finale);
 											}
-										}else{
-											System.out.println(this.getCuadro(maxCuadro.getEx(), maxCuadro.getEy()));
-											this.getCuadro(maxX, maxY).moveHere(maxCuadro);
-											
 										}
-										temp=bot(temp,true,this.cuadros,actual,indefenso,1);
-										if(temp>maxScore){
-											maxScore=temp;
-											maxX=y.getEx();
-											maxY=y.getEy();
-											maxCuadro=b;
+										else if(finale.getPieza().side!=turno) {
+											Pieza enemigo = finale.getPieza();
+											finale.moveHere(inicial);
+											if(signo==1) {
+												puntTemp+=enemigo.getValue();
+											}
+											else {
+												puntTemp-=enemigo.getValue();
+											}
+											puntTemp+=bot(counter+1, !turno);
 											
+											if(puntMax==575757 || puntMax<puntTemp) {
+												puntMax=puntTemp;
+												this.maxInicial=inicial;
+												this.maxFinal=finale;
+												inicial.moveHere(finale);
+												finale.setPieza(enemigo);
+											}
 										}
-										
 									}
 								}
-								//(reseteas)regresas la pieza
-								System.arraycopy(cuadros, 0, this.cuadros, 0, 8);
-								this.indefenso=indefenso;
-								this.turno=turno;
-								this.counter=counter;
-								this.vp=vp;
-								this.actual=actual;
 							}
 						}
 					}
 				}
 			}
 		}
-		//mueve la pieza realmente, haz repaint, turno cambialo a true
-		this.getCuadro(maxX, maxY).moveHere(maxCuadro);
-		this.getCuadro(maxX, maxY).getPieza().realMove(getCuadro(maxX, maxY));
-		this.repaint();
-		this.turno=true;
-	}
-	public int bot(int maxScore, boolean turno, Cuadro[][] cuadros, Cuadro actual, Cuadro indefenso, int counter ){
-		int temp,signo;
-		temp=0;
-		int maxScore2=0;
-		int pieceX=0;
-		int pieceY=0;
-		Cuadro[][] cuadrosTmp=new Cuadro[8][8];
-		System.arraycopy(cuadros, 0, cuadrosTmp, 0, 8);
-		
-		
-		
-		if(turno)signo=1;
-		else signo=-1;
-		
-		if(counter==3){
-			return 0;
-		}else{
-			for(Cuadro[] a:cuadros){//for doble
-				for(Cuadro b:a){
-					if(b.getPieza()!=null){// si hay una pieza
-						if(b.getPieza().getSide()==turno){//si es del color del turno
-							for(Cuadro[] x:cuadros){//for doble (para checar espacios en donde s epuede mover)
-								for(Cuadro y:x){
-									pieceX=b.getEx(); //coordenadas actuales
-									pieceY=b.getEy();
-									if(b!=y){
-										//mueve la pieza a un lugar disponible
-										System.out.println(b.getPieza());
-										if(b.getPieza().valida(b, y.getEx(), y.getEy())){
-											if(y.getPieza()!=null){
-												if(y.getPieza().getSide()==turno){
-													continue;
-												}else{
-													temp+=-signo*y.getPieza().getValue();
-													//mover pieza
-													this.getCuadro(y.getEx(), y.getEy()).moveHere(b);
-													this.getCuadro(y.getEx(), y.getEy()).getPieza().realMove(getCuadro(y.getEx(), y.getEy()));
-												}
-											}else{
-												//mover pieza 
-												this.getCuadro(y.getEx(), y.getEy()).moveHere(b);
-												//this.getCuadro(y.getEx(), y.getEy()).getPieza().realMove(getCuadro(y.getEx(), y.getEy()));
-											}
-											if(temp>maxScore2){
-												maxScore2=temp;
-											}
-										}
-									}
-									//(reseteas)regresas la pieza
-									System.arraycopy(cuadrosTmp, 0, this.cuadros, 0, 8);
-									this.indefenso=indefenso;
-									//this.turno=turno;
-									this.counter=counter;
-									this.vp=vp;
-									this.actual=actual;
-								}
-							}						
-						}
-					}
-				}
-			}
-			return maxScore2+maxScore+bot(maxScore,!turno,cuadros,actual,indefenso,counter+1);
-		}
+		this.nextTurn();
+		return puntMax;
 	}
 	
-	
-	
-	
-	
-	
-		/*temp=0;
-		for(Cuadro[] a:cuadros){
-			for(Cuadro b:a){
-				if(b.getPieza()!=null){
-					temp=calculaScore(b.getEx(),b.getEy());
-					//llamar a la funcion recursiva que te saca el score de esa pieza
-				}
-				if(maxScore<temp){
-					maxScore=temp;
-					//set variable maxCuadro		
-				}
-			}
-		}
-		//mover las piezas
-		//cambiar turno a true
-	}
-	private int calculaScore(int x, int y){
-		PanelBoard newBoard = new PanelBoard(this.vp,this.cuadros, this.actual, this.indefenso, this.turno, this.counter);
-		int maxScore=-500;
-		for(Cuadro[] a:cuadros){
-			for(Cuadro b:a){
-				if(b!=this.getCuadro(x, y)) {
-					if(this.getCuadro(x, y).getPieza().valida(this.getCuadro(x, y), b.getEx(), b.getEy())) {
-						int scoreTmp= this.calculaScore(x, y,b.getEx(),b.getEy(),0,0);
-						if(maxScore<scoreTmp) {
-							maxScore=scoreTmp;
-						}
-					}
-				}
-			}
-		}
-		
-		return maxScore;
-		//recursividad
-	}
-	
-	private int calculaScore(int x, int y, int nX, int nY, int counter, int score){
-		int scoreComb=0;
-		int xNew=0;
-		int yNew=0;
-		if(counter==3) {
-			return score; 
-		}
-		else {
-			
-			//todo el cagadero
-			scoreComb=2;
-			scoreComb+=score;
-			return calculaScore(xNew,yNew,counter+1,scoreComb);
-		}
-		
-		
-		
-	}*/
 }
 
 
