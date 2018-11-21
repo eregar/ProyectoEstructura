@@ -335,7 +335,7 @@ public class PanelBoard extends JPanel {
 		int puntMax=575757;
 		int puntTemp=0;
 		
-		if(counter==5) {//caso base
+		if(counter==3) {//caso base
 			return 0;
 		}
 		else {

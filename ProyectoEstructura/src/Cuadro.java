@@ -175,10 +175,10 @@ public class Cuadro extends JPanel implements MouseListener{
 							this.pb.close();
 						}
 						this.pb.nextTurn();
-						this.pb.bot();
-						this.pb.nextTurn();
+						//this.pb.bot();
+						//this.pb.nextTurn();
 
-						this.pb.getMaxFinal().moveHere(this.pb.getMaxInicial());
+						//this.pb.getMaxFinal().moveHere(this.pb.getMaxInicial());
 						//this.pb.getMaxFinal().getPieza().realMove(this.pb.getMaxFinal());
 						
 						//System.out.println("turno: "+this.pb.getTurno());
@@ -221,9 +221,9 @@ public class Cuadro extends JPanel implements MouseListener{
 											this.pb.close();
 										}
 										this.pb.nextTurn();
-										this.pb.bot();
-										this.pb.nextTurn();
-										this.pb.getMaxFinal().moveHere(this.pb.getMaxInicial());
+										//this.pb.bot();
+										//this.pb.nextTurn();
+										//this.pb.getMaxFinal().moveHere(this.pb.getMaxInicial());
 										//this.pb.getMaxFinal().getPieza().realMove(this.pb.getMaxFinal());
 
 										/*this.pb.bot();
@@ -276,9 +276,9 @@ public class Cuadro extends JPanel implements MouseListener{
 							this.pb.close();
 						}
 						this.pb.nextTurn();
-						this.pb.bot();
-						this.pb.nextTurn();
-						this.pb.getMaxFinal().moveHere(this.pb.getMaxInicial());
+						//this.pb.bot();
+						//this.pb.nextTurn();
+						//this.pb.getMaxFinal().moveHere(this.pb.getMaxInicial());
 						//this.pb.getMaxFinal().getPieza().realMove(this.pb.getMaxFinal());
 						//System.out.println("Turno: "+this.pb.getTurno());
 					}
@@ -287,7 +287,7 @@ public class Cuadro extends JPanel implements MouseListener{
 				
 			}else{
 				if(this.pieza!=null){//si tiene pieza
-					if(this.pieza.getSide()){
+					if(this.pieza.getSide()==this.pb.getTurno()){
 						this.pb.setActual(this);//selecciona verde
 						this.setBackground(Color.GREEN);
 					}
